@@ -1,14 +1,12 @@
 use anchor_lang::prelude::*;
 
-pub mod certification;
-pub mod completion;
-pub mod enrollment;
-pub mod requirement;
-
-use certification::*;
-use completion::*;
-use enrollment::*;
-use requirement::*;
+mod certification;
+mod completion;
+mod contexts;
+mod enrollment;
+mod models;
+mod requirement;
+use contexts::*;
 
 declare_id!("Hh89oGmpZ15RCsDgueaAAcSNG9WVuy79HzYdcgLUp1d3");
 
