@@ -1,6 +1,8 @@
 use crate::contexts::certification::AddCertification;
 use anchor_lang::prelude::*;
 
+// use crate::errors::CertificationError;
+
 // add certification
 pub fn add_certification(
     ctx: Context<AddCertification>,

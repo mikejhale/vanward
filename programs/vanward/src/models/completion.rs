@@ -4,7 +4,7 @@ use anchor_lang::prelude::*;
 #[derive(InitSpace)]
 pub struct Completion {
     pub authority: Pubkey,
-    pub owner: Pubkey,
+    pub enrollment: Pubkey,
     pub requirement: Pubkey,
     pub bump: u8,
 }

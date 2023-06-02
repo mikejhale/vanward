@@ -6,14 +6,15 @@ use crate::models::requirement::Requirement;
 #[derive(Accounts)]
 #[instruction(module: String)]
 pub struct AddRequirement<'info> {
-    #[account(init, payer = user, space = 8 + Requirement::INIT_SPACE, seeds = [
+    #[account(init, payer = authority, space = 8 + Requirement::INIT_SPACE, seeds = [
         b"requirement",
         module.as_bytes(),
-        user.to_account_info().key.as_ref(),
+        authority.to_account_info().key.as_ref(),
     ], bump)]
     pub requirement: Account<'info, Requirement>,
+    #[account(has_one = authority)]
     pub certification: Account<'info, Certification>,
     #[account(mut)]
-    pub user: Signer<'info>,
+    pub authority: Signer<'info>,
     pub system_program: Program<'info, System>,
 }

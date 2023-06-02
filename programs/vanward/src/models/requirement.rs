@@ -3,7 +3,7 @@ use anchor_lang::prelude::*;
 #[account]
 #[derive(InitSpace)]
 pub struct Requirement {
-    pub owner: Pubkey,
+    pub certification: Pubkey,
     pub authority: Pubkey,
     #[max_len(128)]
     pub module: String,

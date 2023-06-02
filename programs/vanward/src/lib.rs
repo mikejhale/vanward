@@ -4,6 +4,7 @@ mod certification;
 mod completion;
 mod contexts;
 mod enrollment;
+mod errors;
 mod models;
 mod requirement;
 use contexts::*;
