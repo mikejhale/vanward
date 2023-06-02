@@ -10,4 +10,6 @@ pub struct Certification {
     #[max_len(480)]
     pub title: String,
     pub bump: u8,
+    #[max_len(32)]
+    pub requirements: Vec<Pubkey>,
 }

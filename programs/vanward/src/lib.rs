@@ -1,7 +1,6 @@
 use anchor_lang::prelude::*;
 
 mod certification;
-mod completion;
 mod contexts;
 mod enrollment;
 mod errors;
@@ -39,7 +38,12 @@ pub mod vanward {
     }
 
     // mark requirement as complete
-    pub fn complete(ctx: Context<CompleteRequirement>) -> Result<()> {
-        completion::complete(ctx)
+    pub fn complete_requirement(ctx: Context<CompleteRequirement>) -> Result<()> {
+        requirement::complete_requirement(ctx)
+    }
+
+    // mark certification as complete
+    pub fn complete_certification(ctx: Context<CompleteCertification>) -> Result<()> {
+        certification::complete_certification(ctx)
     }
 }

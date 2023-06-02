@@ -44,7 +44,7 @@ describe('vanward', async () => {
       .addCertification(certificationId, certificationYear, certificationTitle)
       .accounts({
         certification: certificationPda,
-        user: provider.wallet.publicKey,
+        authority: provider.wallet.publicKey,
         systemProgram: web3.SystemProgram.programId,
       })
       .rpc();
@@ -53,9 +53,9 @@ describe('vanward', async () => {
       certificationPda
     );
 
-    expect(certAccount.id).equals(certificationId);
-    expect(certAccount.year).equals(certificationYear);
-    expect(certAccount.title).equals(certificationTitle);
+    expect(certAccount.id).to.equal(certificationId);
+    expect(certAccount.year).to.equal(certificationYear);
+    expect(certAccount.title).to.equal(certificationTitle);
   });
 
   it('can add a requirement', async () => {
@@ -87,8 +87,16 @@ describe('vanward', async () => {
     let reqAccount = await program.account.requirement.fetch(
       requirementPda.toString()
     );
-    expect(reqAccount.module).equals(certificationId);
-    expect(reqAccount.credits).equals(credits);
+    expect(reqAccount.module).to.equal(certificationId);
+    expect(reqAccount.credits).to.equal(credits);
+
+    let certAccount = await program.account.certification.fetch(
+      certificationPda.toString()
+    );
+
+    expect(certAccount.requirements[0].toString()).to.equal(
+      requirementPda.toString()
+    );
   });
 
   it('can get certification requirements', async () => {
@@ -100,7 +108,7 @@ describe('vanward', async () => {
         },
       },
     ]);
-    expect(reqAccounts[0].account.module).equals(certificationId);
+    expect(reqAccounts[0].account.module).to.equal(certificationId);
   });
 
   it('can add an enrollment', async () => {
@@ -129,9 +137,10 @@ describe('vanward', async () => {
     let enrollAccount = await program.account.enrollment.fetch(
       enrollmentPda.toString()
     );
-    expect(enrollAccount.certification.toString()).equals(
+    expect(enrollAccount.certification.toString()).to.equal(
       certificationPda.toString()
     );
+    expect(enrollAccount.complete).to.equal(false);
   });
 
   it('can mark requirement as complete', async () => {
@@ -145,12 +154,13 @@ describe('vanward', async () => {
     );
 
     const tx = await program.methods
-      .complete()
+      .completeRequirement()
       .accounts({
         completion: completePda,
-        user: provider.wallet.publicKey,
-        owner: enrollPda,
+        authority: provider.wallet.publicKey,
+        enrollment: enrollPda,
         requirement: reqPda,
+        certification: certificationPda.toString(),
         systemProgram: web3.SystemProgram.programId,
       })
       .rpc();
@@ -160,5 +170,23 @@ describe('vanward', async () => {
     );
 
     expect(completeAccount.bump).equals(completeBump);
+  });
+
+  // test that all certification requirements are complete by enrollee
+  it('can check if all requirements are complete', async () => {
+    let cert = await program.account.certification.fetch(
+      certificationPda.toString()
+    );
+
+    let enroll = await program.account.enrollment.all([
+      {
+        memcmp: {
+          offset: 8 + 32,
+          bytes: provider.wallet.publicKey.toBase58(),
+        },
+      },
+    ]);
+
+    expect(enroll.length).to.equal(1);
   });
 });

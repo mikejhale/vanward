@@ -12,7 +12,7 @@ pub struct AddRequirement<'info> {
         authority.to_account_info().key.as_ref(),
     ], bump)]
     pub requirement: Account<'info, Requirement>,
-    #[account(has_one = authority)]
+    #[account(mut, has_one = authority)]
     pub certification: Account<'info, Certification>,
     #[account(mut)]
     pub authority: Signer<'info>,
