@@ -10,6 +10,10 @@ pub enum CertificationError {
 pub enum RequirementError {
     #[msg("Requirement does not exist")]
     InvalidRequirement,
+    #[msg("Requirements do not match certification requirements")]
+    RequirementsMismatch,
+    #[msg("Requirement not complete")]
+    IncompleteRequirement,
 }
 
 #[error_code]
