@@ -234,5 +234,10 @@ describe('vanward', async () => {
       })
       .remainingAccounts(reqAccts.concat(compAccts))
       .rpc();
+
+    let complete_enroll = await program.account.enrollment.fetch(
+      enroll[0].publicKey.toString()
+    );
+    expect(complete_enroll.complete).to.equal(true);
   });
 });

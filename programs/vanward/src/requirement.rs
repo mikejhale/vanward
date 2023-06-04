@@ -24,5 +24,8 @@ pub fn complete_requirement(ctx: Context<CompleteRequirement>) -> Result<()> {
     completion.enrollment = *ctx.accounts.enrollment.to_account_info().key;
     completion.requirement = *ctx.accounts.requirement.to_account_info().key;
     completion.bump = *ctx.bumps.get("completion").unwrap();
+
+    // TODO: if this is the last requirement then complete_certification
+
     Ok(())
 }

@@ -2,7 +2,6 @@ use crate::contexts::*;
 use anchor_lang::prelude::*;
 
 use crate::errors::*;
-use crate::id;
 use crate::models::*;
 
 // add certification
@@ -77,6 +76,9 @@ pub fn complete_certification(ctx: Context<CompleteCertification>) -> Result<()>
             RequirementError::IncompleteRequirement
         );
     }
+
+    // mark enrollment as complete
+    enrollment.complete = true;
 
     Ok(())
 }

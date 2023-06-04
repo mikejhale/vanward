@@ -14,5 +14,4 @@ pub struct CompleteCertification<'info> {
         constraint = enrollment.certification.key() == certification.key()
     )]
     pub enrollment: Account<'info, Enrollment>,
-    pub system_program: Program<'info, System>,
 }
