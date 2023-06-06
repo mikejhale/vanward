@@ -169,9 +169,16 @@ describe('vanward', async () => {
       completePda.toString()
     );
 
-    expect(completeAccount.bump).equals(completeBump);
+    let enrollmentAccount = await program.account.enrollment.fetch(enrollPda);
+
+    expect(completeAccount.bump).to.equal(completeBump);
+    expect(enrollmentAccount.completedRequirements[0].toString()).to.equal(
+      reqPda
+    );
+    expect(enrollmentAccount.complete).to.equal(true);
   });
 
+  /*
   // test that all certification requirements are complete by enrollee
   it('can check if all requirements are complete', async () => {
     // let cert = await program.account.certification.fetch(
@@ -240,4 +247,5 @@ describe('vanward', async () => {
     );
     expect(complete_enroll.complete).to.equal(true);
   });
+  */
 });

@@ -14,6 +14,10 @@ pub enum RequirementError {
     RequirementsMismatch,
     #[msg("Requirement not complete")]
     IncompleteRequirement,
+    #[msg("Enrollment already complete")]
+    EnrollmentAlreadyComplete,
+    #[msg("Requirement already complete")]
+    RequirementAlreadyComplete,
 }
 
 #[error_code]
