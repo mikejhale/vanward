@@ -1,3 +1,4 @@
+use crate::certification::certification_is_complete;
 use crate::contexts::*;
 use crate::errors::*;
 use crate::models::*;
@@ -49,15 +50,10 @@ pub fn complete_requirement(ctx: Context<CompleteRequirement>) -> Result<()> {
         .push(*ctx.accounts.requirement.to_account_info().key);
 
     // if this is the last requirement then complete_certification
-    if ctx.accounts.enrollment.completed_requirements.len()
-        == ctx.accounts.certification.requirements.len()
-        && ctx
-            .accounts
-            .certification
-            .requirements
-            .iter()
-            .all(|req| ctx.accounts.enrollment.completed_requirements.contains(req))
-    {
+    if certification_is_complete(
+        &ctx.accounts.certification.requirements,
+        &ctx.accounts.enrollment.completed_requirements,
+    ) {
         ctx.accounts.enrollment.complete = true;
         ctx.accounts.enrollment.completed_date = Clock::get()?.unix_timestamp;
     }

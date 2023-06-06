@@ -42,10 +42,10 @@ pub fn complete_certification(ctx: Context<CompleteCertification>) -> Result<()>
     req_accounts.dedup_by(|a, b| a.key == b.key);
 
     // check that the number of requirements is the same as certification requirements
-    require!(
-        req_accounts.len() == certification.requirements.len(),
-        RequirementError::RequirementsMismatch
-    );
+    // require!(
+    //     req_accounts.len() == certification.requirements.len(),
+    //     RequirementError::RequirementsMismatch
+    // );
 
     // convert completion_accounts to Account<Completion>
     let compl_accounts: Vec<Account<Completion>> = completion_accounts
@@ -81,4 +81,24 @@ pub fn complete_certification(ctx: Context<CompleteCertification>) -> Result<()>
     enrollment.complete = true;
 
     Ok(())
+}
+
+pub fn certification_is_complete(
+    certification_requirements: &Vec<Pubkey>,
+    complete_requirements: &Vec<Pubkey>,
+) -> bool {
+    // number of requirements match
+    if certification_requirements.len() != complete_requirements.len() {
+        return false;
+    }
+
+    // all requirements are complete
+    if !certification_requirements
+        .iter()
+        .all(|req| complete_requirements.contains(req))
+    {
+        return false;
+    }
+
+    return true;
 }

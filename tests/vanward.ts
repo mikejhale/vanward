@@ -6,11 +6,14 @@ import {
   BN,
   setProvider,
   workspace,
+  getProvider,
 } from '@coral-xyz/anchor';
-import { PublicKey, Keypair } from '@solana/web3.js';
+import { PublicKey, Keypair, Commitment } from '@solana/web3.js';
 import { expect } from 'chai';
 import { Vanward } from '../target/types/vanward';
 const crypto = require('crypto');
+
+const commitment: Commitment = 'confirmed'; // processed, confirmed, finalized
 
 describe('vanward', async () => {
   const certificationId = 'CERT' + (Math.floor(Math.random() * 90000) + 10000);
@@ -38,6 +41,26 @@ describe('vanward', async () => {
     );
 
   certPda = certificationPda.toString();
+
+  const enrollee = new Keypair();
+
+  console.log('enrollee', enrollee.publicKey.toBase58());
+
+  // let tx = await provider.connection.requestAirdrop(
+  //   enrollee.publicKey,
+  //   10000000000
+  // );
+
+  it('Airdrop', async () => {
+    await Promise.all(
+      [enrollee].map(async (k) => {
+        return await getProvider().connection.requestAirdrop(
+          k.publicKey,
+          100 * web3.LAMPORTS_PER_SOL
+        );
+      })
+    ).then(confirmTxs);
+  });
 
   it('can add a certification', async () => {
     const tx = await program.methods
@@ -111,12 +134,12 @@ describe('vanward', async () => {
     expect(reqAccounts[0].account.module).to.equal(certificationId);
   });
 
-  it('can add an enrollment', async () => {
+  it('can enroll', async () => {
     const [enrollmentPda, enrollBump] =
       await web3.PublicKey.findProgramAddressSync(
         [
           utils.bytes.utf8.encode('enroll'),
-          provider.wallet.publicKey.toBuffer(),
+          enrollee.publicKey.toBuffer(),
           certificationPda.toBuffer(),
         ],
         program.programId
@@ -128,10 +151,11 @@ describe('vanward', async () => {
       .enroll()
       .accounts({
         enrollment: enrollmentPda,
-        authority: provider.wallet.publicKey,
         certification: certificationPda,
+        owner: enrollee.publicKey,
         systemProgram: web3.SystemProgram.programId,
       })
+      .signers([enrollee])
       .rpc();
 
     let enrollAccount = await program.account.enrollment.fetch(
@@ -176,6 +200,20 @@ describe('vanward', async () => {
       reqPda
     );
     expect(enrollmentAccount.complete).to.equal(true);
+  });
+
+  it('can check if certification is complete', async () => {
+    let enroll = await program.account.enrollment.all([
+      {
+        memcmp: {
+          offset: 8 + 32,
+          bytes: enrollee.publicKey.toBase58(),
+        },
+      },
+    ]);
+
+    expect(enroll.length).to.equal(1);
+    expect(enroll[0].account.complete).to.equal(true);
   });
 
   /*
@@ -249,3 +287,18 @@ describe('vanward', async () => {
   });
   */
 });
+
+const confirmTx = async (signature: string) => {
+  const latestBlockhash = await getProvider().connection.getLatestBlockhash();
+  await getProvider().connection.confirmTransaction(
+    {
+      signature,
+      ...latestBlockhash,
+    },
+    commitment
+  );
+};
+
+const confirmTxs = async (signatures: string[]) => {
+  await Promise.all(signatures.map(confirmTx));
+};
