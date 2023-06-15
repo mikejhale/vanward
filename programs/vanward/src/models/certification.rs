@@ -6,10 +6,8 @@ pub struct Certification {
     pub authority: Pubkey,
     #[max_len(128)]
     pub id: String,
-    pub year: u16,
     #[max_len(480)]
     pub title: String,
+    pub requirements_count: u8,
     pub bump: u8,
-    #[max_len(32)]
-    pub requirements: Vec<Pubkey>,
 }

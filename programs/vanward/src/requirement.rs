@@ -1,4 +1,4 @@
-use crate::certification::certification_is_complete;
+//use crate::certification::certification_is_complete;
 use crate::contexts::*;
 use crate::errors::*;
 use crate::models::*;
@@ -14,48 +14,38 @@ pub fn add_requirement(ctx: Context<AddRequirement>, module: String, credits: u8
     req.bump = *ctx.bumps.get("requirement").unwrap();
 
     let cert = &mut ctx.accounts.certification;
-    cert.requirements
-        .push(*ctx.accounts.requirement.to_account_info().key);
+    cert.requirements_count = cert.requirements_count.checked_add(1).unwrap();
+    req.order = cert.requirements_count;
+
+    // TODO: set requirements_list bitfield
 
     Ok(())
 }
 
 pub fn complete_requirement(ctx: Context<CompleteRequirement>) -> Result<()> {
-    // dont set complete if already in enrollment.complete_requirements
+    // set kth bit of n
+    // value = value | (1 << (k - 1));
+
+    let order = ctx.accounts.requirement.order;
+    let completed = ctx.accounts.enrollment.completed_requirements;
+
+    // dont set complete if already completed
     require!(
-        !ctx.accounts
-            .enrollment
-            .completed_requirements
-            .contains(&ctx.accounts.requirement.to_account_info().key()),
+        completed & (1 << (order - 1)) == 0,
         RequirementError::RequirementAlreadyComplete
     );
 
-    // dont set complete if enrollment is already complete
-    require!(
-        !ctx.accounts.enrollment.complete,
-        RequirementError::EnrollmentAlreadyComplete
-    );
+    // set requirement as complete
+    ctx.accounts.enrollment.completed_requirements |= 1 << (order - 1);
 
-    let completion = &mut ctx.accounts.completion;
-    completion.authority = *ctx.accounts.authority.key;
-    completion.enrollment = *ctx.accounts.enrollment.to_account_info().key;
-    completion.requirement = *ctx.accounts.requirement.to_account_info().key;
-    completion.completed_date = Clock::get()?.unix_timestamp;
-    completion.bump = *ctx.bumps.get("completion").unwrap();
+    // check that all requierements are complete
+    let complete_num: u64 =
+        ((1 << ctx.accounts.certification.requirements_count) - 1) ^ ((1 << (1 - 1)) - 1);
+    let checked_num: u64 = ctx.accounts.enrollment.completed_requirements & complete_num;
 
-    // save completed requirement to enrollment
-    ctx.accounts
-        .enrollment
-        .completed_requirements
-        .push(*ctx.accounts.requirement.to_account_info().key);
-
-    // if this is the last requirement then complete_certification
-    if certification_is_complete(
-        &ctx.accounts.certification.requirements,
-        &ctx.accounts.enrollment.completed_requirements,
-    ) {
+    if complete_num == checked_num {
+        // is complete
         ctx.accounts.enrollment.complete = true;
-        ctx.accounts.enrollment.completed_date = Clock::get()?.unix_timestamp;
     }
 
     Ok(())

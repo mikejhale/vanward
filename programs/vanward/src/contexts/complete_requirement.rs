@@ -1,21 +1,8 @@
-use anchor_lang::prelude::*;
-
 use crate::models::*;
+use anchor_lang::prelude::*;
 
 #[derive(Accounts)]
 pub struct CompleteRequirement<'info> {
-    #[account(init,
-        payer = authority,
-        space = 8 + Completion::INIT_SPACE,
-        seeds = [
-            b"complete",
-            enrollment.to_account_info().key.as_ref(),
-            requirement.to_account_info().key.as_ref(),
-        ],
-        bump
-    )]
-    pub completion: Account<'info, Completion>,
-
     #[account(mut)]
     pub authority: Signer<'info>,
 

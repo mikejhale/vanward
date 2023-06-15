@@ -8,5 +8,6 @@ pub struct Requirement {
     #[max_len(128)]
     pub module: String,
     pub credits: u8,
+    pub order: u8,
     pub bump: u8,
 }

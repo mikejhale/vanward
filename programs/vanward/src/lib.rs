@@ -17,10 +17,9 @@ pub mod vanward {
     pub fn add_certification(
         ctx: Context<AddCertification>,
         id: String,
-        year: u16,
         title: String,
     ) -> Result<()> {
-        certification::add_certification(ctx, id, year, title)
+        certification::add_certification(ctx, id, title)
     }
 
     // add requirement
@@ -40,10 +39,5 @@ pub mod vanward {
     // mark requirement as complete
     pub fn complete_requirement(ctx: Context<CompleteRequirement>) -> Result<()> {
         requirement::complete_requirement(ctx)
-    }
-
-    // mark certification as complete
-    pub fn complete_certification(ctx: Context<CompleteCertification>) -> Result<()> {
-        certification::complete_certification(ctx)
     }
 }
