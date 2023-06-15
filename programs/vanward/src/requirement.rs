@@ -1,4 +1,3 @@
-//use crate::certification::certification_is_complete;
 use crate::contexts::*;
 use crate::errors::*;
 use crate::models::*;
@@ -17,15 +16,10 @@ pub fn add_requirement(ctx: Context<AddRequirement>, module: String, credits: u8
     cert.requirements_count = cert.requirements_count.checked_add(1).unwrap();
     req.order = cert.requirements_count;
 
-    // TODO: set requirements_list bitfield
-
     Ok(())
 }
 
 pub fn complete_requirement(ctx: Context<CompleteRequirement>) -> Result<()> {
-    // set kth bit of n
-    // value = value | (1 << (k - 1));
-
     let order = ctx.accounts.requirement.order;
     let completed = ctx.accounts.enrollment.completed_requirements;
 
@@ -44,7 +38,6 @@ pub fn complete_requirement(ctx: Context<CompleteRequirement>) -> Result<()> {
     let checked_num: u64 = ctx.accounts.enrollment.completed_requirements & complete_num;
 
     if complete_num == checked_num {
-        // is complete
         ctx.accounts.enrollment.complete = true;
     }
 

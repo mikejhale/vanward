@@ -1,7 +1,5 @@
 use anchor_lang::prelude::*;
 
-/* UNUSED */
-
 #[account]
 #[derive(InitSpace)]
 pub struct Enrollment {

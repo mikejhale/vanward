@@ -238,91 +238,6 @@ describe('vanward', async () => {
     expect(enrollmentAccount.complete).to.equal(true);
   });
 
-
-  // it('can check if certification is complete', async () => {
-  //   let enroll = await program.account.enrollment.all([
-  //     {
-  //       memcmp: {
-  //         offset: 8 + 32,
-  //         bytes: enrollee.publicKey.toBase58(),
-  //       },
-  //     },
-  //   ]);
-
-  //   expect(enroll.length).to.equal(1);
-  //   expect(enroll[0].account.complete).to.equal(true);
-  // });
-
-  /*
-  // test that all certification requirements are complete by enrollee
-  it('can check if all requirements are complete', async () => {
-    // let cert = await program.account.certification.fetch(
-    //   certificationPda.toString()
-    // );
-
-    let enroll = await program.account.enrollment.all([
-      {
-        memcmp: {
-          offset: 8 + 32,
-          bytes: provider.wallet.publicKey.toBase58(),
-        },
-      },
-    ]);
-
-    expect(enroll.length).to.equal(1);
-
-    let reqs = await program.account.requirement.all([
-      {
-        memcmp: {
-          offset: 8,
-          bytes: certificationPda.toBase58(),
-        },
-      },
-    ]);
-    expect(reqs.length).to.equal(1);
-
-    const reqAccts = Array.from(reqs, (r) => {
-      return {
-        pubkey: r.publicKey,
-        isWritable: false,
-        isSigner: false,
-      };
-    });
-
-    let completions = await program.account.completion.all([
-      {
-        memcmp: {
-          offset: 8 + 32,
-          bytes: enroll[0].publicKey.toBase58(),
-        },
-      },
-    ]);
-    expect(completions.length).to.equal(1);
-
-    const compAccts = Array.from(completions, (c) => {
-      return {
-        pubkey: c.publicKey,
-        isWritable: false,
-        isSigner: false,
-      };
-    });
-
-    const tx = await program.methods
-      .completeCertification()
-      .accounts({
-        certification: certificationPda,
-        authority: provider.wallet.publicKey,
-        enrollment: enroll[0].publicKey,
-      })
-      .remainingAccounts(reqAccts.concat(compAccts))
-      .rpc();
-
-    let complete_enroll = await program.account.enrollment.fetch(
-      enroll[0].publicKey.toString()
-    );
-    expect(complete_enroll.complete).to.equal(true);
-  });
-  */
 });
 
 const confirmTx = async (signature: string) => {
@@ -332,7 +247,7 @@ const confirmTx = async (signature: string) => {
       signature,
       ...latestBlockhash,
     },
-    "finalized"
+   commitment
   );
 };
 
