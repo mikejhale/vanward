@@ -9,6 +9,7 @@ pub fn enroll(ctx: Context<Enroll>) -> Result<()> {
     enrollment.authority = ctx.accounts.certification.authority;
     enrollment.owner = *ctx.accounts.owner.key;
     enrollment.complete = false;
+    enrollment.completed_requirements = 0;
     enrollment.bump = *ctx.bumps.get("enrollment").unwrap();
     Ok(())
 }

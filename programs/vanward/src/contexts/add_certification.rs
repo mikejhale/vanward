@@ -8,7 +8,6 @@ pub struct AddCertification<'info> {
     #[account(init, payer = authority, space = 8 + Certification::INIT_SPACE, seeds = [
         b"certification",
         id.as_bytes(),
-        year.to_le_bytes().as_ref(),
         authority.to_account_info().key.as_ref(),
     ], bump)]
     pub certification: Account<'info, Certification>,

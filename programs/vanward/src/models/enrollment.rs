@@ -1,5 +1,7 @@
 use anchor_lang::prelude::*;
 
+/* UNUSED */
+
 #[account]
 #[derive(InitSpace)]
 pub struct Enrollment {
@@ -8,7 +10,6 @@ pub struct Enrollment {
     pub certification: Pubkey,
     pub complete: bool,
     pub completed_date: i64,
-    #[max_len(32)]
-    pub completed_requirements: Vec<Pubkey>,
+    pub completed_requirements: u64,
     pub bump: u8,
 }
