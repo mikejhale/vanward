@@ -1,0 +1,11 @@
+resolve: {
+      fallback: {
+        "zlib": false,
+        "http": false,
+        "https": false,
+        "stream": false,
+        "crypto": false,
+        "url": false,
+        "crypto-browserify": require.resolve('crypto-browserify')
+      },
+}
