@@ -24,7 +24,7 @@ export function SidebarLinks(props: {
 
 	// this function creates the links from the secondary accordions (for example auth -> sign-in -> default)
 	const createLinks = (
-		routes: RoutesType[], 
+		routes: RoutesType[],
 	) => {
 		return routes.map(
 			(
@@ -44,7 +44,7 @@ export function SidebarLinks(props: {
 											<Box
 												color={activeRoute(route.path.toLowerCase()) ? activeIcon : textColor}
 												me='18px'>
-												{route.icon}
+
 											</Box>
 											<Text
 												me='auto'

@@ -21,7 +21,7 @@ export default function MiniCalendar(props: { selectRange: boolean; [x: string]:
 			h='max-content'
 			{...rest}>
 			<Calendar
-				onChange={onChange}
+				//onChange={onChange}
 				value={value}
 				selectRange={selectRange}
 				view={'month'}

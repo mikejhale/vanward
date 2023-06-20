@@ -4,6 +4,7 @@ import React from 'react';
 import {
 	Box,
 	Flex,
+	Stack, Text,
 	Drawer,
 	DrawerBody,
 	Icon,
@@ -13,15 +14,16 @@ import {
 	DrawerContent,
 	DrawerCloseButton
 } from '@chakra-ui/react';
-import Content from 'components/sidebar/components/Content';
 import { renderThumb, renderTrack, renderView } from 'components/scrollbar/Scrollbar';
 import { Scrollbars } from 'react-custom-scrollbars-2';
+//   Custom components
+import Brand from 'components/sidebar/components/Brand';
+import Content from 'components/sidebar/components/Content';
 
 // Assets
 import { IoMenuOutline } from 'react-icons/io5';
 
-function Sidebar(props: { routes: RoutesType[]; [x: string]: any }) {
-	const { routes } = props;
+function Sidebar() {
 
 	let variantChange = '0.2s linear';
 	let shadow = useColorModeValue('14px 17px 40px 4px rgba(112, 144, 176, 0.08)', 'unset');
@@ -46,7 +48,11 @@ function Sidebar(props: { routes: RoutesType[]; [x: string]: any }) {
 					renderTrackVertical={renderTrack}
 					renderThumbVertical={renderThumb}
 					renderView={renderView}>
-					<Content routes={routes} />
+					<Flex direction='column' height='100%' pt='25px' borderRadius='30px'>
+
+
+			<Content />
+		</Flex>
 				</Scrollbars>
 			</Box>
 		</Box>
@@ -54,7 +60,7 @@ function Sidebar(props: { routes: RoutesType[]; [x: string]: any }) {
 }
 
 // FUNCTIONS
-export function SidebarResponsive(props: { routes: RoutesType[] }) {
+export function SidebarResponsive(props: any) {
 	let sidebarBackgroundColor = useColorModeValue('white', 'navy.800');
 	let menuColor = useColorModeValue('gray.400', 'white');
 	// // SIDEBAR
@@ -97,7 +103,7 @@ export function SidebarResponsive(props: { routes: RoutesType[] }) {
 							renderTrackVertical={renderTrack}
 							renderThumbVertical={renderThumb}
 							renderView={renderView}>
-							<Content routes={routes} />
+<Content />
 						</Scrollbars>
 					</DrawerBody>
 				</DrawerContent>

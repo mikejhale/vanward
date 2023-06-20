@@ -1,3 +1,5 @@
+import { ReactNode } from "react";
+
 export {};
 
 declare global {
@@ -8,9 +10,8 @@ declare global {
 	interface RoutesType {
 		name: string;
 		layout: string;
-		component: () => JSX.Element;
-		icon: JSX.Element | string;
 		path: string;
-		secondary?: boolean;
+		icon: Element;
+		component: () => Element;
 	}
 }
