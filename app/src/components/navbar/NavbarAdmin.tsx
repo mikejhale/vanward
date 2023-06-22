@@ -38,7 +38,7 @@ export default function AdminNavbar(props: {
   let secondaryText = useColorModeValue('gray.700', 'white');
   let navbarPosition = 'fixed' as const;
   let navbarFilter = 'none';
-  //let navbarBackdrop = 'blur(20px)';
+  // //let navbarBackdrop = 'blur(20px)';
   let navbarShadow = 'none';
   let navbarBg = useColorModeValue(
     'rgba(244, 247, 254, 0.2)',
@@ -60,9 +60,9 @@ export default function AdminNavbar(props: {
     <Box
       position={navbarPosition}
       boxShadow={navbarShadow}
-      bg={navbarBg}
+      //bg={navbarBg}
       borderColor={navbarBorder}
-      filter={navbarFilter}
+      //filter={navbarFilter}
       //backdropFilter={navbarBackdrop}
       backgroundPosition='center'
       backgroundSize='cover'

@@ -14,7 +14,6 @@ export const WalletButton: FC = () => {
   const [buttonStyles, setButtonStyles] = useState({});
 
   useEffect(() => {
-    console.log(styles);
     setButtonStyles(styles);
   }, [styles]);
 

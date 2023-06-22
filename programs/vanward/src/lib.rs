@@ -18,8 +18,10 @@ pub mod vanward {
         ctx: Context<AddCertification>,
         id: String,
         title: String,
+        max_enrollees: u16,
+        enrollment_enddate: i64,
     ) -> Result<()> {
-        certification::add_certification(ctx, id, title)
+        certification::add_certification(ctx, id, title, max_enrollees, enrollment_enddate)
     }
 
     // add requirement

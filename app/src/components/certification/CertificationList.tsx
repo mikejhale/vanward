@@ -1,25 +1,87 @@
 import CertificationCard from './CertificationCard';
-import { SimpleGrid } from '@chakra-ui/react';
-import { useContext, useEffect } from 'react';
-import { AppContext } from '../../contexts/AppContext';
+import {
+  Flex,
+  IconButton,
+  Spinner,
+  Button,
+  Tooltip,
+  useColorModeValue,
+} from '@chakra-ui/react';
+//import { useState } from 'react';
+//import { ProgramAccount } from '@coral-xyz/anchor';
+//import { AppContext } from '../../contexts/AppContext';
+import { useConnection, useWallet } from '@solana/wallet-adapter-react';
+//import { Certification } from '../../types/certification';
+import NextLink from 'next/link';
+import { getCertifications } from '../../rpc/certifications';
+import { useQuery } from '@tanstack/react-query';
+import { MdOutlineRefresh } from 'react-icons/md';
+import { HiOutlineDocumentAdd } from 'react-icons/hi';
 
 const CertificationList = (props: any) => {
-  const appCtx = useContext(AppContext);
+  // const [certifications, setCertifications] = useState<
+  //   ProgramAccount<Certification>[]
+  // >([]);
+  const { connection } = useConnection();
+  const wallet = useWallet();
+  //const appCtx = useContext(AppContext);
 
-  useEffect(() => {
-    // get certifications from server
-  }, []);
+  const buttonBgColor = useColorModeValue('brand.500', 'brand.400');
+  const buttonHoverColor = useColorModeValue('brand.400', 'brand.500');
+  const buttonColor = useColorModeValue('secondaryGray.100', 'brand.500');
+
+  const { status, data, refetch, isFetching } = useQuery({
+    queryKey: ['certifications'],
+    queryFn: () => getCertifications(wallet, connection),
+  });
 
   return (
-    <SimpleGrid
-      columns={{ base: 1, md: 2, lg: 2, '2xl': 3 }}
-      gap='20px'
-      mb='20px'
-    >
-      <CertificationCard title='Certification 1' id='Q4SOL2023' />
-      <CertificationCard title='Certification 2' id='WBA23' />
-      <CertificationCard title='Certification 3' id='PKHACK' />
-    </SimpleGrid>
+    <>
+      <Flex mb={4}>
+        <NextLink href={'/certification?add=1'} passHref>
+          <Button
+            bgColor={buttonBgColor}
+            _hover={{ bgColor: buttonHoverColor }}
+            leftIcon={<HiOutlineDocumentAdd />}
+          >
+            New Certification
+          </Button>
+        </NextLink>
+        <Tooltip hasArrow label='Refresh' placement='auto'>
+          <IconButton
+            aria-label='refresh'
+            icon={<MdOutlineRefresh />}
+            ml={2}
+            onClick={() => refetch()}
+            isDisabled={isFetching}
+          />
+        </Tooltip>
+      </Flex>
+      <Flex wrap='wrap' alignItems='center' gap={4}>
+        {status === 'error' && <div>Could not get Certifications</div>}
+        {isFetching && (
+          <Spinner
+            thickness='4px'
+            speed='0.65s'
+            emptyColor='gray.200'
+            color='brand.500'
+            size='xl'
+          />
+        )}
+        {status === 'success' && data.length === 0 && (
+          <div>No Certifications</div>
+        )}
+        {status === 'success' &&
+          data.length > 0 &&
+          data.map((cert: any) => (
+            <CertificationCard
+              key={cert.publicKey.toString()}
+              publickey={cert.publicKey.toString()}
+              certification={cert.account}
+            />
+          ))}
+      </Flex>
+    </>
   );
 };
 export default CertificationList;

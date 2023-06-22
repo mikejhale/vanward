@@ -19,14 +19,15 @@ type EnrolleeCountProps = {
 
 const EnrolleeCount = (props: EnrolleeCountProps) => {
   const textColorSecondary = 'secondaryGray.600';
+  const textColor = useColorModeValue('secondaryGray.800', 'white');
 
   return (
     <Box w='100%' mt='auto'>
       <Flex w='100%' justify='space-between' mb='10px'>
-        <Text color={textColorSecondary} fontSize='sm' maxW='40%'>
+        <Text color={textColor} fontSize='sm' maxW='40%'>
           {props.count} Enrollees
         </Text>
-        <Text color={textColorSecondary} fontSize='sm' maxW='40%'>
+        <Text color={textColor} fontSize='sm' maxW='40%'>
           MAX {props.max}
         </Text>
       </Flex>

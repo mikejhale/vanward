@@ -1,3 +1,7 @@
 button.wallet-adapter-button-trigger:hover {
   background-color: #190793 !important;
 }
+
+button.wallet-adapter-button-trigger i img[alt='Backpack icon'] {
+  filter: brightness(0) invert(1);
+}

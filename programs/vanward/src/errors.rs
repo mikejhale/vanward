@@ -24,4 +24,6 @@ pub enum RequirementError {
 pub enum EnrollmentError {
     #[msg("Enrollment does not exist")]
     InvalidEnrollment,
+    #[msg("Max enrollment reached")]
+    MaxEnrollmentreached,
 }

@@ -8,9 +8,10 @@ import { WalletModalProvider } from '@solana/wallet-adapter-react-ui';
 import * as walletAdapterWallets from '@solana/wallet-adapter-wallets';
 require('@solana/wallet-adapter-react-ui/styles.css');
 
+console.log(process.env.RPC_ENDPOINT);
+
 const WalletContextProvider: FC<{ children: ReactNode }> = ({ children }) => {
-  //const endpoint = web3.clusterApiUrl('devnet');
-  const endpoint = 'http://localhost:8899';
+  const endpoint = process.env.NEXT_PUBLIC_RPC_ENDPOINT;
   const wallets = [
     new walletAdapterWallets.PhantomWalletAdapter(),
     new walletAdapterWallets.SolflareWalletAdapter(),

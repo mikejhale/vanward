@@ -25,7 +25,7 @@ import navImage from 'assets/img/layout/Navbar.png';
 import { MdNotificationsNone, MdInfoOutline } from 'react-icons/md';
 import { IoMdMoon, IoMdSunny } from 'react-icons/io';
 import { FaEthereum } from 'react-icons/fa';
-import { WalletButton } from './WalletButton';
+import { WalletButton } from '../wallet/WalletButton';
 
 export default function HeaderLinks(props: { secondary: boolean }) {
   const { secondary } = props;
