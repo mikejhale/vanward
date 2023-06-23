@@ -27,21 +27,15 @@ export const CertificationForm: FC = () => {
   const [certId, setCertId] = useState('');
   const [endOption, setEndOption] = useState('');
   const [certTitle, setCertTitle] = useState('');
+  const [maxEnrollees, setMaxEnrollees] = useState(0);
+  const [endDate, setEndDate] = useState(0);
   const { colorMode } = useColorMode();
   const inputColor = useColorModeValue('gray.800', 'gray.200');
   const { connection } = useConnection();
   const wallet = useWallet();
   const { mutate } = useMutation(
-    ({ wallet, connection, id, title, endType, maxEnrollees, endDate }) =>
-      addCertification(
-        wallet,
-        connection,
-        id,
-        title,
-        endType,
-        maxEnrollees,
-        endDate
-      )
+    ({ wallet, connection, id, title, maxEnrollees, endDate }) =>
+      addCertification(wallet, connection, id, title, maxEnrollees, endDate)
   );
 
   const handleAddCert = async (event: any) => {
@@ -52,15 +46,18 @@ export const CertificationForm: FC = () => {
       connection: connection,
       id: certId,
       title: certTitle,
-      endType: 1,
-      maxEnrollees: 1000,
-      endDate: 0,
+      maxEnrollees: maxEnrollees,
+      endDate: endDate,
     });
   };
 
   const handleEndOption = (event: any) => {
-    console.log(event.target.value);
     setEndOption(event.target.value);
+  };
+
+  const handleSelectDate = (date) => {
+    setEndDate(date);
+    console.log('Selected Date: ', date);
   };
 
   return (
@@ -121,7 +118,7 @@ export const CertificationForm: FC = () => {
             isRequired={endOption === 'enrollment_enddate'}
           >
             <FormLabel>Enrollment End Date</FormLabel>
-            <DatePicker />
+            <DatePicker selectDate={handleSelectDate} />
           </FormControl>
 
           <Button

@@ -17,10 +17,9 @@ import {
 } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import EnrolleeCount from './EnrolleeCount';
+import EnrollmentStatus from './EnrollmentStatus';
 import { HiUsers } from 'react-icons/hi';
 import { MdFormatListBulletedAdd } from 'react-icons/md';
-import { TiLockClosed } from 'react-icons/ti';
-import { BsCheck2Circle } from 'react-icons/bs';
 import { RiFileCopy2Line } from 'react-icons/ri';
 import { useCopyToClipboard } from '../../hooks/useCopyToClipboard';
 
@@ -100,9 +99,17 @@ const CertificationCard = (props: any) => {
         ) : (
           <Box w='100%' mt='auto'>
             <Flex w='100%' justify='space-between' mb='10px'>
-              <Text color={textColor} fontSize='sm' maxW='40%'>
+              <Text color={textColor} fontSize='sm'>
                 {parseInt(certification.count) || 0} Enrollees
               </Text>
+              {certification.enrollmentEnddate > 0 && (
+                <Text color={textColor} fontSize='sm'>
+                  Enrollment ends:{' '}
+                  {new Date(certification.enrollmentEnddate.toNumber() * 1000)
+                    .toISOString()
+                    .slice(0, 10)}
+                </Text>
+              )}
             </Flex>
           </Box>
         )}
@@ -117,25 +124,10 @@ const CertificationCard = (props: any) => {
       <Divider borderColor={divderColor} />
       <CardFooter justify={'flex-end'} alignItems='center' flexWrap='wrap'>
         <Box flexGrow='1'>
-          {certification.open ? (
-            <Icon
-              ml={2}
-              color='green.500'
-              boxSize={8}
-              aria-label='Open'
-              as={BsCheck2Circle}
-              title='Enrollment is open'
-            />
-          ) : (
-            <Icon
-              ml={2}
-              color='red.500'
-              aria-label='closed'
-              boxSize={8}
-              as={TiLockClosed}
-              title='Enrollment is closed'
-            />
-          )}
+          <EnrollmentStatus
+            maxEnrollees={certification.maxEnrollees}
+            endDate={certification.endDate}
+          />
         </Box>
         <Tooltip hasArrow label='Manage Requirements' placement='top'>
           <NextLink href={'/add-requirements?cert=' + props.publickey} passHref>

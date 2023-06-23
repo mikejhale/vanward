@@ -73,20 +73,15 @@ const DatePicker = (props: any) => {
 
   let startDate = new Date();
   startDate.setDate(startDate.getDate() + 1);
-  const [date, setDate] = useState(startDate);
+  const [endDate, setEndDate] = useState(startDate);
 
-  // useEffect(() => {
-  //   console.log('color mode: ' + colorMode);
-  //   setDateColorMode(
-  //     colorMode === 'light' ? lightPropsConfig : darkPropsConfig
-  //   );
-  // }, [colorMode]);
+  props.selectDate(Date.parse(endDate) / 1000);
 
   return (
     <SingleDatepicker
       name='date-input'
-      date={date}
-      onDateChange={setDate}
+      date={endDate}
+      onDateChange={setEndDate}
       minDate={new Date()}
       propsConfigs={{
         dayOfMonthBtnProps: {

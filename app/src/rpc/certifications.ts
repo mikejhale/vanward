@@ -19,12 +19,12 @@ export const addCertification = async (
   connection: web3.Connection,
   id: string,
   title: string,
-  endType: number,
   maxEnrollees: number,
   endDate: number
 ) => {
   console.log('adding certification...');
-  console.log(id, title, endType, maxEnrollees, endDate);
+
+  console.log('end date', endDate);
 
   const program = getProgram(wallet, connection);
   const [certificationPda, certBump] = await PublicKey.findProgramAddressSync(

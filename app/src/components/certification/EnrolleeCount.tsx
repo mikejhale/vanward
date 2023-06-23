@@ -20,7 +20,7 @@ type EnrolleeCountProps = {
 const EnrolleeCount = (props: EnrolleeCountProps) => {
   const textColorSecondary = 'secondaryGray.600';
   const textColor = useColorModeValue('secondaryGray.800', 'white');
-  const enrolleeCount = parseInt(props.count) || 0;
+  const enrolleeCount: number = isNaN(props.count) ? 0 : props.count;
 
   return (
     <Box w='100%' mt='auto'>
