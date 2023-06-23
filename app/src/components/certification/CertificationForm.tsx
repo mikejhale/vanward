@@ -7,30 +7,27 @@ import {
   FormLabel,
   Input,
   Select,
-  Text,
   NumberInput,
   NumberInputField,
   NumberInputStepper,
   NumberIncrementStepper,
   NumberDecrementStepper,
+  useColorModeValue,
+  useColorMode,
 } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
-import { SingleDatepicker } from 'chakra-dayzed-datepicker';
-//import DatePicker from '../datepicker/DatePicker';
+import DatePicker from '../datepicker/DatePicker';
 
 export const CertificationForm: FC = () => {
   const router = useRouter();
   const [certId, setCertId] = useState('');
   const [endOption, setEndOption] = useState('');
   const [certTitle, setCertTitle] = useState('');
-
-  let startDate = new Date();
-  startDate.setDate(startDate.getDate() + 1);
-  const [date, setDate] = useState(startDate);
+  const { colorMode } = useColorMode();
+  const inputColor = useColorModeValue('gray.800', 'gray.200');
 
   const handleAddCert = async (event: any) => {
     event.preventDefault();
-
     console.log('add cert');
   };
 
@@ -46,6 +43,7 @@ export const CertificationForm: FC = () => {
           <FormControl mb={6} isRequired>
             <FormLabel>Title</FormLabel>
             <Input
+              color={inputColor}
               width='600px'
               id='certTitle'
               value={certTitle}
@@ -57,6 +55,7 @@ export const CertificationForm: FC = () => {
           <FormControl mb={6} isRequired>
             <FormLabel>ID</FormLabel>
             <Input
+              color={inputColor}
               width='240px'
               id='certId'
               value={certId}
@@ -80,8 +79,8 @@ export const CertificationForm: FC = () => {
             isRequired={endOption === 'max_enrollees'}
           >
             <FormLabel>Max Enrollee Count</FormLabel>
-            <NumberInput width='100px'>
-              <NumberInputField />
+            <NumberInput width='100px' color={inputColor}>
+              <NumberInputField color={inputColor} />
               <NumberInputStepper>
                 <NumberIncrementStepper />
                 <NumberDecrementStepper />
@@ -95,12 +94,7 @@ export const CertificationForm: FC = () => {
             isRequired={endOption === 'enrollment_enddate'}
           >
             <FormLabel>Enrollment End Date</FormLabel>
-            <SingleDatepicker
-              name='date-input'
-              date={date}
-              onDateChange={setDate}
-              minDate={new Date()}
-            />
+            <DatePicker />
           </FormControl>
 
           <Button width='200px' mt={4} type='submit'>

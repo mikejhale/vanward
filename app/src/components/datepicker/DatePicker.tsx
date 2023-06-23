@@ -1,40 +1,117 @@
-import { useState } from 'react';
-import {
-  Calendar,
-  CalendarControls,
-  CalendarPrevButton,
-  CalendarNextButton,
-  CalendarMonths,
-  CalendarMonth,
-  CalendarMonthName,
-  CalendarWeek,
-  CalendarDays,
-  CalendarDate,
-} from '@uselessdev/datepicker';
+import { useState, useEffect } from 'react';
+import { useColorModeValue, useColorMode } from '@chakra-ui/react';
+import { SingleDatepicker } from 'chakra-dayzed-datepicker';
 
+/*
+const darkPropsConfig = {
+  dateNavBtnProps: {
+    colorScheme: 'brand',
+    variant: 'outline',
+  },
+  dayOfMonthBtnProps: {
+    defaultBtnProps: {
+      borderColor: 'brand.300',
+      _hover: {
+        background: 'brand.400',
+      },
+    },
+    selectedBtnProps: {
+      background: 'brand.200',
+      color: 'brand.500',
+    },
+    todayBtnProps: {
+      background: 'brand.400',
+    },
+  },
+  inputProps: {
+    size: 'sm',
+    color: 'greeen',
+  },
+  popoverCompProps: {
+    popoverContentProps: {
+      background: 'gray.700',
+      color: 'white',
+    },
+  },
+};
+
+const lightPropsConfig = {
+  dateNavBtnProps: {
+    colorScheme: 'brand',
+    variant: 'outline',
+  },
+  dayOfMonthBtnProps: {
+    defaultBtnProps: {
+      borderColor: 'red',
+      _hover: {
+        background: 'purple',
+      },
+    },
+    selectedBtnProps: {
+      background: 'white',
+      color: 'yellow',
+    },
+    todayBtnProps: {
+      background: 'teal',
+    },
+  },
+  inputProps: {
+    size: 'sm',
+    color: 'red',
+  },
+  popoverCompProps: {
+    popoverContentProps: {
+      background: 'gray.700',
+      color: 'white',
+    },
+  },
+};
+*/
 const DatePicker = (props: any) => {
-  const [date, setDate] = useState<CalendarDate>();
+  const [dateColorMode, setDateColorMode] = useState(null);
+  const { colorMode } = useColorMode();
 
-  const handleSelectDate = (date: CalendarDate) => setDate(date);
+  let startDate = new Date();
+  startDate.setDate(startDate.getDate() + 1);
+  const [date, setDate] = useState(startDate);
+
+  // useEffect(() => {
+  //   console.log('color mode: ' + colorMode);
+  //   setDateColorMode(
+  //     colorMode === 'light' ? lightPropsConfig : darkPropsConfig
+  //   );
+  // }, [colorMode]);
+
   return (
-    <Calendar
-      value={{ start: date }}
-      onSelectDate={handleSelectDate}
-      singleDateSelection
-    >
-      <CalendarControls>
-        <CalendarPrevButton />
-        <CalendarNextButton />
-      </CalendarControls>
-
-      <CalendarMonths>
-        <CalendarMonth>
-          <CalendarMonthName />
-          <CalendarWeek />
-          <CalendarDays />
-        </CalendarMonth>
-      </CalendarMonths>
-    </Calendar>
+    <SingleDatepicker
+      name='date-input'
+      date={date}
+      onDateChange={setDate}
+      minDate={new Date()}
+      propsConfigs={{
+        dayOfMonthBtnProps: {
+          defaultBtnProps: {
+            //background: 'red',
+            _hover: {
+              background: 'brand.400',
+            },
+          },
+          selectedBtnProps: {
+            background: 'brand.800',
+            color: 'gray.200',
+          },
+        },
+        inputProps: {
+          size: 'md',
+          color: useColorModeValue('gray.800', 'gray.200'),
+        },
+        popoverCompProps: {
+          popoverContentProps: {
+            background: useColorModeValue('white', 'navy.800'),
+          },
+        },
+      }}
+    />
   );
 };
 
