@@ -20,12 +20,13 @@ type EnrolleeCountProps = {
 const EnrolleeCount = (props: EnrolleeCountProps) => {
   const textColorSecondary = 'secondaryGray.600';
   const textColor = useColorModeValue('secondaryGray.800', 'white');
+  const enrolleeCount = parseInt(props.count) || 0;
 
   return (
     <Box w='100%' mt='auto'>
       <Flex w='100%' justify='space-between' mb='10px'>
         <Text color={textColor} fontSize='sm' maxW='40%'>
-          {props.count} Enrollees
+          {enrolleeCount.toString()} Enrollees
         </Text>
         <Text color={textColor} fontSize='sm' maxW='40%'>
           MAX {props.max}
@@ -35,7 +36,7 @@ const EnrolleeCount = (props: EnrolleeCountProps) => {
         aria-valuenow={props.count}
         alignItems='start'
         colorScheme='brandScheme'
-        value={(props.count / props.max) * 100}
+        value={(enrolleeCount / props.max) * 100}
         w='100%'
       />
     </Box>

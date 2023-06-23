@@ -2,7 +2,12 @@ import { useRouter } from 'next/router';
 import NextLink from 'next/link';
 import { Box, Flex, HStack, Text, useColorModeValue } from '@chakra-ui/react';
 
-export function SidebarLink(props: { href: string; label: string; icon: any }) {
+export function SidebarLink(props: {
+  href: string;
+  label: string;
+  icon: any;
+  group: string;
+}) {
   const router = useRouter();
   let activeColor = useColorModeValue('gray.700', 'white');
   let activeIcon = useColorModeValue('brand.500', 'white');
@@ -10,34 +15,28 @@ export function SidebarLink(props: { href: string; label: string; icon: any }) {
   let brandColor = useColorModeValue('brand.500', 'brand.400');
 
   const activeRoute = (route: string) => {
-    return router.route === route;
+    return router.route.includes(route);
   };
 
   return (
     <NextLink href={props.href}>
       <Box>
         <HStack
-          spacing={activeRoute(props.href.toLowerCase()) ? '22px' : '26px'}
+          spacing={activeRoute(props.group) ? '22px' : '26px'}
           py='5px'
           ps='10px'
         >
           <Flex w='100%' alignItems='center' justifyContent='center'>
             <Box
-              color={
-                activeRoute(props.href.toLowerCase()) ? activeIcon : textColor
-              }
+              color={activeRoute(props.group) ? activeIcon : textColor}
               me='18px'
             >
               {props.icon}
             </Box>
             <Text
               me='auto'
-              color={
-                activeRoute(props.href.toLowerCase()) ? activeColor : textColor
-              }
-              fontWeight={
-                activeRoute(props.href.toLowerCase()) ? 'bold' : 'normal'
-              }
+              color={activeRoute(props.group) ? activeColor : textColor}
+              fontWeight={activeRoute(props.group) ? 'bold' : 'normal'}
             >
               {props.label}
             </Text>
@@ -45,9 +44,7 @@ export function SidebarLink(props: { href: string; label: string; icon: any }) {
           <Box
             h='36px'
             w='4px'
-            bg={
-              activeRoute(props.href.toLowerCase()) ? brandColor : 'transparent'
-            }
+            bg={activeRoute(props.group) ? brandColor : 'transparent'}
             borderRadius='5px'
           />
         </HStack>

@@ -1,26 +1,15 @@
 // Chakra imports
-import {
-  Text,
-  Box,
-  Flex,
-  Select,
-  SimpleGrid,
-  useColorModeValue,
-} from '@chakra-ui/react';
+import { Text, Box, Flex, useColorModeValue } from '@chakra-ui/react';
 // Assets
-import MiniStatistics from 'components/card/MiniStatistics';
 import type { NextPage } from 'next';
-import IconBox from 'components/icons/IconBox';
-import { MdBarChart } from 'react-icons/md';
-import Card from '../components/card/Card';
-import CertificationList from '../components/certification/CertificationList';
+import Card from '../../components/card/Card';
+import { CertificationForm } from '../../components/certification/CertificationForm';
 
-const Enrollees: NextPage = () => {
+const CertificationEdit: NextPage = () => {
   const textColorPrimary = useColorModeValue('secondaryGray.900', 'white');
-
-  // Chakra Color Mode
   const brandColor = useColorModeValue('brand.500', 'white');
   const boxBg = useColorModeValue('secondaryGray.300', 'whiteAlpha.100');
+
   return (
     <Box pt={{ base: '130px', md: '80px', xl: '80px' }}>
       <Card mb='20px'>
@@ -31,12 +20,13 @@ const Enrollees: NextPage = () => {
             fontSize='2xl'
             mb='4px'
           >
-            Notifications
+            Create Certification
           </Text>
         </Flex>
+        <CertificationForm />
       </Card>
     </Box>
   );
 };
 
-export default Enrollees;
+export default CertificationEdit;

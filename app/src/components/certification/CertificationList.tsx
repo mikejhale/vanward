@@ -30,7 +30,7 @@ const CertificationList = (props: any) => {
   const buttonHoverColor = useColorModeValue('brand.400', 'brand.500');
   const buttonColor = useColorModeValue('secondaryGray.100', 'brand.500');
 
-  const { status, data, refetch, isFetching } = useQuery({
+  const { status, data, refetch, error, isFetching } = useQuery({
     queryKey: ['certifications'],
     queryFn: () => getCertifications(wallet, connection),
   });
@@ -38,10 +38,11 @@ const CertificationList = (props: any) => {
   return (
     <>
       <Flex mb={4}>
-        <NextLink href={'/certification?add=1'} passHref>
+        <NextLink href={'/certifications/edit?cert=0'} passHref>
           <Button
-            bgColor={buttonBgColor}
-            _hover={{ bgColor: buttonHoverColor }}
+            colorScheme='navy'
+            //bgColor={buttonBgColor}
+            //_hover={{ bgColor: buttonHoverColor }}
             leftIcon={<HiOutlineDocumentAdd />}
           >
             New Certification
@@ -58,6 +59,7 @@ const CertificationList = (props: any) => {
         </Tooltip>
       </Flex>
       <Flex wrap='wrap' alignItems='center' gap={4}>
+        {console.log(error)}
         {status === 'error' && <div>Could not get Certifications</div>}
         {isFetching && (
           <Spinner

@@ -15,8 +15,12 @@ import {
   useColorModeValue,
   useColorMode,
 } from '@chakra-ui/react';
+import { useMutation } from '@tanstack/react-query';
+import { useConnection, useWallet } from '@solana/wallet-adapter-react';
 import { useRouter } from 'next/router';
+import { addCertification } from 'rpc/certifications';
 import DatePicker from '../datepicker/DatePicker';
+import { TbBrandAirbnb } from 'react-icons/tb';
 
 export const CertificationForm: FC = () => {
   const router = useRouter();
@@ -25,10 +29,33 @@ export const CertificationForm: FC = () => {
   const [certTitle, setCertTitle] = useState('');
   const { colorMode } = useColorMode();
   const inputColor = useColorModeValue('gray.800', 'gray.200');
+  const { connection } = useConnection();
+  const wallet = useWallet();
+  const { mutate } = useMutation(
+    ({ wallet, connection, id, title, endType, maxEnrollees, endDate }) =>
+      addCertification(
+        wallet,
+        connection,
+        id,
+        title,
+        endType,
+        maxEnrollees,
+        endDate
+      )
+  );
 
   const handleAddCert = async (event: any) => {
     event.preventDefault();
     console.log('add cert');
+    mutate({
+      wallet: wallet,
+      connection: connection,
+      id: certId,
+      title: certTitle,
+      endType: 1,
+      maxEnrollees: 1000,
+      endDate: 0,
+    });
   };
 
   const handleEndOption = (event: any) => {
@@ -97,7 +124,13 @@ export const CertificationForm: FC = () => {
             <DatePicker />
           </FormControl>
 
-          <Button width='200px' mt={4} type='submit'>
+          <Button
+            width='200px'
+            mt={4}
+            type='submit'
+            //backgroundColor={useColorModeValue('brand.500', 'gray.200')}
+            colorScheme={'navy'}
+          >
             Save Certification
           </Button>
         </form>

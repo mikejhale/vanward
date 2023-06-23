@@ -101,7 +101,7 @@ const CertificationCard = (props: any) => {
           <Box w='100%' mt='auto'>
             <Flex w='100%' justify='space-between' mb='10px'>
               <Text color={textColor} fontSize='sm' maxW='40%'>
-                {parseInt(certification.count)} Enrollees
+                {parseInt(certification.count) || 0} Enrollees
               </Text>
             </Flex>
           </Box>
