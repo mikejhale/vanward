@@ -7,9 +7,9 @@ import {
   Tooltip,
   useColorModeValue,
 } from '@chakra-ui/react';
-//import { useState } from 'react';
+import { useEffect, useContext } from 'react';
 //import { ProgramAccount } from '@coral-xyz/anchor';
-//import { AppContext } from '../../contexts/AppContext';
+import { AppContext } from '../../contexts/AppContext';
 import { useConnection, useWallet } from '@solana/wallet-adapter-react';
 //import { Certification } from '../../types/certification';
 import NextLink from 'next/link';
@@ -24,7 +24,7 @@ const CertificationList = (props: any) => {
   // >([]);
   const { connection } = useConnection();
   const wallet = useWallet();
-  //const appCtx = useContext(AppContext);
+  const appCtx = useContext(AppContext);
 
   const buttonBgColor = useColorModeValue('brand.500', 'brand.400');
   const buttonHoverColor = useColorModeValue('brand.400', 'brand.500');
@@ -34,6 +34,12 @@ const CertificationList = (props: any) => {
     queryKey: ['certifications'],
     queryFn: () => getCertifications(wallet, connection),
   });
+
+  useEffect(() => {
+    if (status === 'success') {
+      appCtx.certifications = data;
+    }
+  }, [status, data]);
 
   return (
     <>
@@ -59,7 +65,6 @@ const CertificationList = (props: any) => {
         </Tooltip>
       </Flex>
       <Flex wrap='wrap' alignItems='center' gap={4}>
-        {console.log(error)}
         {status === 'error' && <div>Could not get Certifications</div>}
         {isFetching && (
           <Spinner

@@ -15,17 +15,14 @@ const queryClient = new QueryClient({
   },
 });
 
-const setCertifications = () => {
-  console.log('setCertifications');
+const defaultContext = {
+  certifications: [],
+  setCertifications: (certs) => {},
 };
-
-const value = { setCerts: setCertifications, certCount: 3 };
-
-console.log(process.env.RPC_ENDPOINT);
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <AppContext.Provider value={value}>
+    <AppContext.Provider value={defaultContext}>
       <ChakraProvider theme={theme}>
         <WalletContextProvider>
           <QueryClientProvider client={queryClient}>

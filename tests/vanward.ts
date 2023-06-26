@@ -87,6 +87,14 @@ describe('vanward', async () => {
     expect(certAccount.requirementsCount).to.equal(0);
   });
 
+  it('can get certifications', async () => {
+    let certAccount = await program.account.certification.fetch(
+      certificationPda.toString()
+    );
+
+    expect(certAccount.requirementsCount).to.equal(0);
+  });
+
   it('can add a requirement', async () => {
     const module = 'Week 1';
     const credits = 1;

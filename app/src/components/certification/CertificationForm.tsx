@@ -40,7 +40,7 @@ export const CertificationForm: FC = () => {
 
   const handleAddCert = async (event: any) => {
     event.preventDefault();
-    console.log('add cert');
+
     mutate({
       wallet: wallet,
       connection: connection,

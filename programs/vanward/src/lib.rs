@@ -8,7 +8,7 @@ mod models;
 mod requirement;
 use contexts::*;
 
-declare_id!("Hh89oGmpZ15RCsDgueaAAcSNG9WVuy79HzYdcgLUp1d3");
+declare_id!("4AmPAMovn48nui76YZ6pN8ztchfb8QMybnG3a3SYb7eV");
 
 #[program]
 pub mod vanward {

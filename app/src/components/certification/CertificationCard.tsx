@@ -86,7 +86,7 @@ const CertificationCard = (props: any) => {
         mb={3}
         pt={1}
         pl={4}
-        pr={4}
+        pr={8}
         pb={1}
         display='flex'
         flexDirection='column'
@@ -130,7 +130,10 @@ const CertificationCard = (props: any) => {
           />
         </Box>
         <Tooltip hasArrow label='Manage Requirements' placement='top'>
-          <NextLink href={'/add-requirements?cert=' + props.publickey} passHref>
+          <NextLink
+            href={'/certifications/reqs?cert=' + props.publickey}
+            passHref
+          >
             <IconButton
               variant='outline'
               icon={<MdFormatListBulletedAdd />}
@@ -142,7 +145,7 @@ const CertificationCard = (props: any) => {
           </NextLink>
         </Tooltip>
         <Tooltip hasArrow label='Enrollees' placement='top'>
-          <NextLink href={'/add-requirements?cert=' + props.publickey} passHref>
+          <NextLink href={'/enrollees?cert=' + props.publickey} passHref>
             <IconButton
               variant='outline'
               icon={<HiUsers />}
