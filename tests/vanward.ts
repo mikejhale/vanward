@@ -206,6 +206,14 @@ describe('vanward', async () => {
       certificationPda.toString()
     );
     expect(enrollAccount.complete).to.equal(false);
+
+    let certAccount = await program.account.certification.fetch(
+      certificationPda.toString()
+    );
+
+    console.log(certAccount);
+
+    expect(certAccount.enrolleeCount).to.equal(1);
   });
 
   it('can not enroll more than max enrollments', async () => {
@@ -240,11 +248,10 @@ describe('vanward', async () => {
         certificationPda.toString()
       );
     } catch (_err) {
-      console.log(_err);
       expect(_err).to.be.instanceOf(AnchorError);
       const err: AnchorError = _err;
       const errMsg = 'Max enrollment reached';
-      expect(err.message).to.equal(errMsg);
+      expect(err.error.errorMessage).to.equal(errMsg);
     }
   });
 

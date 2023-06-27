@@ -2,6 +2,7 @@ import type { AppProps } from 'next/app';
 import { ChakraProvider } from '@chakra-ui/react';
 import WalletContextProvider from '../contexts/WalletContextProvider';
 import { AppContext } from '../contexts/AppContext';
+import { ProgramAccount } from '@coral-xyz/anchor';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import MainLayout from 'layouts/MainLayout';
 import theme from 'theme/theme';
@@ -16,8 +17,8 @@ const queryClient = new QueryClient({
 });
 
 const defaultContext = {
-  certifications: [],
-  setCertifications: (certs) => {},
+  certifications: [] as ProgramAccount[],
+  setCertifications: (certs: ProgramAccount[]) => {},
 };
 
 function MyApp({ Component, pageProps }: AppProps) {

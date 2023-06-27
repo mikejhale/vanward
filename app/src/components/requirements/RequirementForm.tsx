@@ -14,7 +14,6 @@ import {
 } from '@chakra-ui/react';
 import { useConnection, useWallet } from '@solana/wallet-adapter-react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useRouter } from 'next/router';
 import { addRequirement } from 'rpc/requirements';
 
 const RequirementForm = (props: { certification: string; closeForm: any }) => {

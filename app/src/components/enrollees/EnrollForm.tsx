@@ -1,19 +1,16 @@
 import { Box, Text, Button } from '@chakra-ui/react';
 import Card from 'components/card/Card';
 import { useConnection, useWallet } from '@solana/wallet-adapter-react';
-import { web3, utils, BN } from '@coral-xyz/anchor';
+import { web3, utils } from '@coral-xyz/anchor';
 import { getProgram } from '../../rpc/program';
-import { getFilter } from '../../rpc/memcmpFilter';
 import { PublicKey } from '@solana/web3.js';
 
 const EnrollForm = (props: any) => {
   const { connection } = useConnection();
   const wallet = useWallet();
-
   const program = getProgram(wallet, connection);
-  const filter = getFilter(8, wallet.publicKey.toBase58());
 
-  const [enrollmentPda, enrollmentBump] = PublicKey.findProgramAddressSync(
+  const [enrollmentPda] = PublicKey.findProgramAddressSync(
     [
       utils.bytes.utf8.encode('enroll'),
       wallet.publicKey.toBuffer(),
@@ -35,10 +32,6 @@ const EnrollForm = (props: any) => {
 
     console.log('enroll', enrollmentPda.toString());
   };
-
-  program.account.certification.fetch(props.certification).then((cert) => {
-    console.log(cert.enrollmentEnddate?.toString());
-  });
 
   return (
     <Card

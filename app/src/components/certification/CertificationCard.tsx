@@ -8,7 +8,6 @@ import {
   Box,
   Heading,
   IconButton,
-  Icon,
   CardFooter,
   Divider,
   useToast,
@@ -44,6 +43,7 @@ const CertificationCard = (props: any) => {
         isClosable: true,
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value]);
 
   return (
@@ -93,7 +93,7 @@ const CertificationCard = (props: any) => {
       >
         {certification.maxEnrollees > 0 ? (
           <EnrolleeCount
-            count={certification.count}
+            count={certification.enrolleeCount}
             max={certification.maxEnrollees}
           />
         ) : (
@@ -101,7 +101,7 @@ const CertificationCard = (props: any) => {
             <Flex w='100%' justify='space-between' mb='10px'>
               <Text color={textColor} fontSize='sm'>
                 {parseInt(certification.enrolleeCount) || 0} Enrollee
-                {certification.enrolleeCount != 1 ? 's' : ''}
+                {certification.enrolleeCount !== 1 ? 's' : ''}
               </Text>
               {certification.enrollmentEnddate > 0 && (
                 <Text color={textColor} fontSize='sm'>
@@ -128,6 +128,7 @@ const CertificationCard = (props: any) => {
           <EnrollmentStatus
             maxEnrollees={certification.maxEnrollees}
             endDate={certification.endDate}
+            enrolleeCount={certification.enrolleeCount}
           />
         </Box>
         <Tooltip hasArrow label='Manage Requirements' placement='top'>

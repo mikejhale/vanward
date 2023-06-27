@@ -29,6 +29,7 @@ const CertificationList = (props: any) => {
       console.log('certs', data);
       appCtx.certifications = data;
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status, data]);
 
   return (
@@ -54,17 +55,17 @@ const CertificationList = (props: any) => {
           />
         </Tooltip>
       </Flex>
-      <Flex wrap='wrap' alignItems='center' gap={4}>
+      {isFetching && (
+        <Spinner
+          thickness='4px'
+          speed='0.65s'
+          emptyColor='gray.200'
+          color='brand.500'
+          size='xl'
+        />
+      )}
+      <Flex wrap='wrap' alignItems='center' gap={4} hidden={isFetching}>
         {status === 'error' && <div>Could not get Certifications</div>}
-        {isFetching && (
-          <Spinner
-            thickness='4px'
-            speed='0.65s'
-            emptyColor='gray.200'
-            color='brand.500'
-            size='xl'
-          />
-        )}
         {status === 'success' && data.length === 0 && (
           <div>No Certifications</div>
         )}

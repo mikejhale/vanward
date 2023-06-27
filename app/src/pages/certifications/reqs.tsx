@@ -26,6 +26,7 @@ const Requirements: NextPage = () => {
     if (certification) {
       setCert(certification);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [certificationAddress]);
 
   const handleAddRequirement = () => {

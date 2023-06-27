@@ -35,7 +35,7 @@ export const addRequirement = async (args: requirementArgs) => {
 
   const program = getProgram(args.wallet, args.connection);
 
-  const [requirementPda, reqBump] = await PublicKey.findProgramAddressSync(
+  const [requirementPda] = await PublicKey.findProgramAddressSync(
     [
       utils.bytes.utf8.encode('requirement'),
       utils.bytes.utf8.encode(args.module),

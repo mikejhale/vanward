@@ -1,18 +1,17 @@
-import { Icon, Tooltip } from '@chakra-ui/react';
+import { Icon } from '@chakra-ui/react';
 import { TiLockClosed, TiLockOpen } from 'react-icons/ti';
-import { BsCheck2Circle } from 'react-icons/bs';
 
 type EnrollmentStatusProps = {
+  enrolleeCount: number;
   maxEnrollees: number;
   endDate: number;
 };
 
 const EnrollmentStatus = (props: EnrollmentStatusProps) => {
   let isOpen = true;
-  let count = 1000;
   if (props.maxEnrollees > 0) {
     // if enrollees = max set as closed
-    if (count >= props.maxEnrollees) {
+    if (props.enrolleeCount >= props.maxEnrollees) {
       isOpen = false;
     }
   } else if (props.endDate > 0) {

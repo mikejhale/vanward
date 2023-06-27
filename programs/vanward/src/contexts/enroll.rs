@@ -11,6 +11,7 @@ pub struct Enroll<'info> {
         certification.to_account_info().key.as_ref(),
     ], bump)]
     pub enrollment: Account<'info, Enrollment>,
+    #[account(mut)]
     pub certification: Account<'info, Certification>,
     #[account(mut)]
     pub owner: Signer<'info>,

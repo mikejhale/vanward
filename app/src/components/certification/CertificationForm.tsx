@@ -13,38 +13,29 @@ import {
   NumberIncrementStepper,
   NumberDecrementStepper,
   useColorModeValue,
-  useColorMode,
 } from '@chakra-ui/react';
+import { useRouter } from 'next/router';
 import { useMutation } from '@tanstack/react-query';
 import { useConnection, useWallet } from '@solana/wallet-adapter-react';
-import { useRouter } from 'next/router';
 import { addCertification } from 'rpc/certifications';
 import DatePicker from '../datepicker/DatePicker';
-import { TbBrandAirbnb } from 'react-icons/tb';
 
 export const CertificationForm: FC = () => {
-  const router = useRouter();
   const [certId, setCertId] = useState('');
   const [endOption, setEndOption] = useState('');
   const [certTitle, setCertTitle] = useState('');
   const [maxEnrollees, setMaxEnrollees] = useState(0);
   const [endDate, setEndDate] = useState(0);
-  const { colorMode } = useColorMode();
   const inputColor = useColorModeValue('gray.800', 'gray.200');
   const { connection } = useConnection();
   const wallet = useWallet();
+  const router = useRouter();
   const { mutate } = useMutation({
     mutationFn: addCertification,
     onSuccess: (data) => {
-      console.log('success');
-      // close form and redirect
+      router.push(`/certifications/list`);
     },
   });
-
-  // const { mutate } = useMutation(
-  //   ({ wallet, connection, id, title, maxEnrollees, endDate }) =>
-  //     addCertification(wallet, connection, id, title, maxEnrollees, endDate)
-  // );
 
   const handleAddCert = async (event: any) => {
     event.preventDefault();
@@ -65,7 +56,7 @@ export const CertificationForm: FC = () => {
     setEndOption(event.target.value);
   };
 
-  const handleSelectDate = (date) => {
+  const handleSelectDate = (date: number) => {
     setEndDate(date);
     console.log('Selected Date: ', date);
   };

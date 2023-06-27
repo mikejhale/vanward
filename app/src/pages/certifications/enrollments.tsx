@@ -1,5 +1,5 @@
 // Chakra imports
-import { Text, Button, Box, Flex, useColorModeValue } from '@chakra-ui/react';
+import { Text, Box, Flex, useColorModeValue } from '@chakra-ui/react';
 // Assets
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
@@ -11,7 +11,6 @@ import { useState, useEffect, useContext } from 'react';
 
 const Enrollments: NextPage = () => {
   const [cert, setCert] = useState(null);
-  const [addMode, setAddMode] = useState(false);
   const router = useRouter();
   const textColorPrimary = useColorModeValue('secondaryGray.900', 'white');
   const appCtx = useContext(AppContext);
@@ -25,6 +24,7 @@ const Enrollments: NextPage = () => {
     if (certification) {
       setCert(certification);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [certificationAddress]);
 
   return (

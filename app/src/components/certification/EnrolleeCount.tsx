@@ -1,16 +1,4 @@
-import {
-  Text,
-  Card,
-  CardBody,
-  CardHeader,
-  Flex,
-  Box,
-  Heading,
-  IconButton,
-  Progress,
-  CardFooter,
-  useColorModeValue,
-} from '@chakra-ui/react';
+import { Text, Flex, Box, Progress, useColorModeValue } from '@chakra-ui/react';
 
 type EnrolleeCountProps = {
   count: number;
@@ -18,7 +6,6 @@ type EnrolleeCountProps = {
 };
 
 const EnrolleeCount = (props: EnrolleeCountProps) => {
-  const textColorSecondary = 'secondaryGray.600';
   const textColor = useColorModeValue('secondaryGray.800', 'white');
   const enrolleeCount: number = isNaN(props.count) ? 0 : props.count;
 

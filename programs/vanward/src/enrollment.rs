@@ -22,6 +22,13 @@ pub fn enroll(ctx: Context<Enroll>) -> Result<()> {
         );
     }
 
+    ctx.accounts.certification.enrollee_count = ctx
+        .accounts
+        .certification
+        .enrollee_count
+        .checked_add(1)
+        .unwrap();
+
     enrollment.certification = ctx.accounts.certification.to_account_info().key();
     enrollment.authority = ctx.accounts.certification.authority;
     enrollment.owner = *ctx.accounts.owner.key;

@@ -18,7 +18,7 @@ export const getEnrollees = async (
 ) => {
   const program = getProgram(wallet, connection);
   const filter = getFilter(8 + 64, new PublicKey(certification).toBase58());
-  const enrollments = await program.account.enrollment.all();
+  const enrollments = await program.account.enrollment.all(filter);
 
   console.log('Enrollments', enrollments);
 
@@ -28,7 +28,7 @@ export const getEnrollees = async (
 export const addEnrollee = async (args: requirementArgs) => {
   const program = getProgram(args.wallet, args.connection);
 
-  const [requirementPda, reqBump] = await PublicKey.findProgramAddressSync(
+  const [requirementPda] = await PublicKey.findProgramAddressSync(
     [
       utils.bytes.utf8.encode('requirement'),
       utils.bytes.utf8.encode(args.module),

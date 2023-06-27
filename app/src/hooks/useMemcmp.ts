@@ -1,5 +1,3 @@
-import base58 from 'bs58';
-
 const useMemcmp = (offset: number, value: string) => {
   const filter = [
     {

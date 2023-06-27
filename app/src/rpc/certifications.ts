@@ -26,10 +26,8 @@ export const getCertifications = async (
 export const addCertification = async (args: addCertArgs) => {
   console.log('adding certification...');
 
-  console.log(args.maxEnrollees);
-
   const program = getProgram(args.wallet, args.connection);
-  const [certificationPda, certBump] = await PublicKey.findProgramAddressSync(
+  const [certificationPda] = PublicKey.findProgramAddressSync(
     [
       utils.bytes.utf8.encode('certification'),
       utils.bytes.utf8.encode(args.id),
