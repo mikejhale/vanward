@@ -18,7 +18,7 @@ pub fn enroll(ctx: Context<Enroll>) -> Result<()> {
     if ctx.accounts.certification.enrollment_enddate > 0 {
         require!(
             ctx.accounts.certification.enrollment_enddate < Clock::get()?.unix_timestamp,
-            EnrollmentError::MaxEnrollmentreached
+            EnrollmentError::EnrollmentExpired
         );
     }
 

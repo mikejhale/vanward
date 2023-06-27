@@ -1,10 +1,11 @@
 import { Icon } from '@chakra-ui/react';
+import { BN } from '@coral-xyz/anchor';
 import { TiLockClosed, TiLockOpen } from 'react-icons/ti';
 
 type EnrollmentStatusProps = {
   enrolleeCount: number;
   maxEnrollees: number;
-  endDate: number;
+  endDate: BN;
 };
 
 const EnrollmentStatus = (props: EnrollmentStatusProps) => {
@@ -14,9 +15,9 @@ const EnrollmentStatus = (props: EnrollmentStatusProps) => {
     if (props.enrolleeCount >= props.maxEnrollees) {
       isOpen = false;
     }
-  } else if (props.endDate > 0) {
+  } else if (props.endDate.toNumber() > 0) {
     // check if props.enddate is in the past
-    if (props.endDate < Date.now()) {
+    if (props.endDate.toNumber() * 1000 < Date.now()) {
       isOpen = false;
     }
   }

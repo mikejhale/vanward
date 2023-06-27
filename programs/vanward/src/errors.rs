@@ -26,4 +26,6 @@ pub enum EnrollmentError {
     InvalidEnrollment,
     #[msg("Max enrollment reached")]
     MaxEnrollmentreached,
+    #[msg("Enrollment expired")]
+    EnrollmentExpired,
 }

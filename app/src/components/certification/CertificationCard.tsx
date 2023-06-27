@@ -127,7 +127,7 @@ const CertificationCard = (props: any) => {
         <Box flexGrow='1'>
           <EnrollmentStatus
             maxEnrollees={certification.maxEnrollees}
-            endDate={certification.endDate}
+            endDate={certification.enrollmentEnddate}
             enrolleeCount={certification.enrolleeCount}
           />
         </Box>
