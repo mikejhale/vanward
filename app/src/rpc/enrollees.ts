@@ -11,28 +11,21 @@ interface requirementArgs {
   credits: number;
 }
 
-export const getRequirements = async (
+export const getEnrollees = async (
   wallet: any,
   connection: web3.Connection,
   certification: string
 ) => {
-  console.log('reqs rpc: certification', certification);
   const program = getProgram(wallet, connection);
-  const filter = getFilter(8, new PublicKey(certification).toBase58());
-  const reqs = await program.account.requirement.all(filter);
+  const filter = getFilter(8 + 64, new PublicKey(certification).toBase58());
+  const enrollments = await program.account.enrollment.all();
 
-  return reqs;
+  console.log('Enrollments', enrollments);
+
+  return enrollments;
 };
 
-export const addRequirement = async (args: requirementArgs) => {
-  console.log('adding requirement...');
-
-  console.log('wallet', args.wallet);
-  console.log('connection', args.connection);
-  console.log('certification', args.certification);
-  console.log('module', args.module);
-  console.log('credits', args.credits);
-
+export const addEnrollee = async (args: requirementArgs) => {
   const program = getProgram(args.wallet, args.connection);
 
   const [requirementPda, reqBump] = await PublicKey.findProgramAddressSync(

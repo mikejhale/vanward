@@ -3,6 +3,15 @@ import { getProgram } from './program';
 import { getFilter } from './memcmpFilter';
 import { PublicKey } from '@solana/web3.js';
 
+type addCertArgs = {
+  wallet: any;
+  connection: web3.Connection;
+  id: string;
+  title: string;
+  maxEnrollees: number;
+  endDate: number;
+};
+
 export const getCertifications = async (
   wallet: any,
   connection: web3.Connection
@@ -14,35 +23,31 @@ export const getCertifications = async (
   return certs;
 };
 
-export const addCertification = async (
-  wallet: any,
-  connection: web3.Connection,
-  id: string,
-  title: string,
-  maxEnrollees: number,
-  endDate: number
-) => {
+export const addCertification = async (args: addCertArgs) => {
   console.log('adding certification...');
 
-  console.log('end date', endDate);
+  console.log(args.maxEnrollees);
 
-  const program = getProgram(wallet, connection);
+  const program = getProgram(args.wallet, args.connection);
   const [certificationPda, certBump] = await PublicKey.findProgramAddressSync(
     [
       utils.bytes.utf8.encode('certification'),
-      utils.bytes.utf8.encode(id),
-      wallet.publicKey.toBuffer(),
+      utils.bytes.utf8.encode(args.id),
+      args.wallet.publicKey.toBuffer(),
     ],
     program.programId
   );
 
-  console.log('certificationPda', certificationPda.toBase58());
-
   const tx = await program.methods
-    .addCertification(id, title, maxEnrollees, new BN(endDate))
+    .addCertification(
+      args.id,
+      args.title,
+      args.maxEnrollees,
+      new BN(args.endDate)
+    )
     .accounts({
       certification: certificationPda,
-      user: wallet.publicKey,
+      user: args.wallet.publicKey,
       systemProgram: web3.SystemProgram.programId,
     })
     .rpc();

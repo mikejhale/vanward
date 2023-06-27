@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import { useState } from 'react';
 import {
   Box,
@@ -6,63 +5,53 @@ import {
   FormControl,
   FormLabel,
   Input,
+  NumberInput,
+  NumberInputField,
+  NumberInputStepper,
+  NumberIncrementStepper,
+  NumberDecrementStepper,
   useColorModeValue,
 } from '@chakra-ui/react';
 import { useConnection, useWallet } from '@solana/wallet-adapter-react';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import { addRequirement } from 'rpc/requirements';
 
-const RequirementForm = (props: { certification: string }) => {
-  const router = useRouter();
+const RequirementForm = (props: { certification: string; closeForm: any }) => {
   const [reqModule, setReqModule] = useState('');
   const [reqCredits, setReqCredits] = useState(1);
   const inputColor = useColorModeValue('gray.800', 'gray.200');
-  const { certification } = props;
+  const { certification, closeForm } = props;
   const { connection } = useConnection();
   const wallet = useWallet();
-  const { mutate } = useMutation(
-    ({ wallet, connection, certification, module, credits }) =>
-      addRequirement(wallet, connection, certification, module, credits)
-  );
+  const queryClient = useQueryClient();
+  const { mutate } = useMutation({
+    mutationFn: addRequirement,
+    onSuccess: (data) => {
+      queryClient.invalidateQueries(['requirements']);
+      setReqModule('');
+      setReqCredits(1);
+      closeForm();
+    },
+  });
+
+  // const { mutate } = useMutation(
+  //   ({ wallet, connection, certification, module, credits }) =>
+  //     addRequirement(wallet, connection, certification, module, credits)
+  // );
 
   const handleAddReq = async (event: any) => {
     event.preventDefault();
 
     mutate({
-      wallet: wallet,
-      connection: connection,
-      certification: certification,
+      wallet,
+      connection,
+      certification,
       module: reqModule,
       credits: reqCredits,
     });
   };
-  /*
-    const [requirementPda, reqBump] = await PublicKey.findProgramAddressSync(
-      [
-        utils.bytes.utf8.encode('requirement'),
-        utils.bytes.utf8.encode(reqModule),
-        provider.wallet.publicKey.toBuffer(),
-      ],
-      program.programId
-    );
 
-    console.log(certificationAddress);
-
-    const tx = await program.methods
-      .addRequirement(reqModule, reqCredits)
-      .accounts({
-        requirement: requirementPda,
-        certification: new PublicKey(certificationAddress),
-        user: provider.wallet.publicKey,
-        systemProgram: web3.SystemProgram.programId,
-      })
-      .rpc();
-
-    console.log('Account Created (Requirement)', tx);
-    router.push('/');
-  };
-*/
   return (
     <>
       <Box p={4} display={{ md: 'flex' }} margin={2}>
@@ -81,25 +70,39 @@ const RequirementForm = (props: { certification: string }) => {
 
           <FormControl mb={6} isRequired>
             <FormLabel>Credits</FormLabel>
-            <Input
-              id='credits'
-              color={inputColor}
-              value={reqCredits}
+            <NumberInput
+              //value={reqCredits}
               min={1}
               max={1000}
-              type='number'
-              onChange={(event) =>
-                setReqCredits(parseInt(event.currentTarget.value))
+              width='100px'
+              color={inputColor}
+              value={reqCredits}
+              onChange={(valueAsString, valueAsNumber) =>
+                setReqCredits(valueAsNumber)
               }
-            />
+            >
+              <NumberInputField color={inputColor} />
+              <NumberInputStepper>
+                <NumberIncrementStepper />
+                <NumberDecrementStepper />
+              </NumberInputStepper>
+            </NumberInput>
           </FormControl>
           <Button
-            width='200px'
+            mr={8}
+            width='140px'
+            variant='outline'
             mt={4}
-            type='submit'
-            //backgroundColor={useColorModeValue('brand.500', 'gray.200')}
             colorScheme={'navy'}
+            onClick={() => {
+              setReqModule('');
+              setReqCredits(1);
+              closeForm();
+            }}
           >
+            Cancel
+          </Button>
+          <Button width='200px' mt={4} type='submit' colorScheme={'navy'}>
             {' '}
             Save
           </Button>

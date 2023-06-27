@@ -100,7 +100,8 @@ const CertificationCard = (props: any) => {
           <Box w='100%' mt='auto'>
             <Flex w='100%' justify='space-between' mb='10px'>
               <Text color={textColor} fontSize='sm'>
-                {parseInt(certification.count) || 0} Enrollees
+                {parseInt(certification.enrolleeCount) || 0} Enrollee
+                {certification.enrolleeCount != 1 ? 's' : ''}
               </Text>
               {certification.enrollmentEnddate > 0 && (
                 <Text color={textColor} fontSize='sm'>
@@ -145,7 +146,10 @@ const CertificationCard = (props: any) => {
           </NextLink>
         </Tooltip>
         <Tooltip hasArrow label='Enrollees' placement='top'>
-          <NextLink href={'/enrollees?cert=' + props.publickey} passHref>
+          <NextLink
+            href={'/certifications/enrollments?cert=' + props.publickey}
+            passHref
+          >
             <IconButton
               variant='outline'
               icon={<HiUsers />}

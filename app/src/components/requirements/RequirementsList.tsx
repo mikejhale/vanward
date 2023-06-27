@@ -8,6 +8,7 @@ import {
   Th,
   Thead,
   Tr,
+  Spinner,
   useColorModeValue,
 } from '@chakra-ui/react';
 import {
@@ -42,24 +43,25 @@ const RequirementsList = (props: { certification: string }) => {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [reqData, setReqData] = useState([]);
   const textColor = useColorModeValue('secondaryGray.900', 'white');
-  const iconColor = useColorModeValue('secondaryGray.500', 'white');
   const borderColor = useColorModeValue('gray.200', 'whiteAlpha.100');
 
-  console.log('RL: certification', certification);
-
-  const { status, data, refetch, error, isLoading } = useQuery({
+  const { data, isFetching } = useQuery({
     queryKey: ['requirements'],
     queryFn: () => getRequirements(wallet, connection, certification),
   });
 
   useEffect(() => {
     console.log('req data', data);
-    const reqs = data?.map((req) => {
+    const reqs = data?.map((req: any) => {
       return {
         module: req.account.module,
         credits: req.account.credits,
+        order: req.account.order,
       };
     });
+
+    // sort reqs by account.order
+    reqs?.sort((a, b) => (a.order > b.order ? 1 : -1));
 
     setReqData(reqs);
   }, [data]);
@@ -118,9 +120,7 @@ const RequirementsList = (props: { certification: string }) => {
     debugTable: true,
   });
 
-  console.log('req data', reqData);
-
-  return reqData.length > 0 ? (
+  return reqData?.length > 0 ? (
     <Card
       flexDirection='column'
       w='100%'
@@ -190,6 +190,14 @@ const RequirementsList = (props: { certification: string }) => {
         </Table>
       </Box>
     </Card>
+  ) : isFetching ? (
+    <Spinner
+      thickness='4px'
+      speed='0.65s'
+      emptyColor='gray.200'
+      color='brand.500'
+      size='xl'
+    />
   ) : (
     <Text>No requirements found</Text>
   );

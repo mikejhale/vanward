@@ -1,12 +1,5 @@
 import CertificationCard from './CertificationCard';
-import {
-  Flex,
-  IconButton,
-  Spinner,
-  Button,
-  Tooltip,
-  useColorModeValue,
-} from '@chakra-ui/react';
+import { Flex, IconButton, Spinner, Button, Tooltip } from '@chakra-ui/react';
 import { useEffect, useContext } from 'react';
 //import { ProgramAccount } from '@coral-xyz/anchor';
 import { AppContext } from '../../contexts/AppContext';
@@ -26,17 +19,14 @@ const CertificationList = (props: any) => {
   const wallet = useWallet();
   const appCtx = useContext(AppContext);
 
-  const buttonBgColor = useColorModeValue('brand.500', 'brand.400');
-  const buttonHoverColor = useColorModeValue('brand.400', 'brand.500');
-  const buttonColor = useColorModeValue('secondaryGray.100', 'brand.500');
-
-  const { status, data, refetch, error, isFetching } = useQuery({
+  const { status, data, refetch, isFetching } = useQuery({
     queryKey: ['certifications'],
     queryFn: () => getCertifications(wallet, connection),
   });
 
   useEffect(() => {
     if (status === 'success') {
+      console.log('certs', data);
       appCtx.certifications = data;
     }
   }, [status, data]);

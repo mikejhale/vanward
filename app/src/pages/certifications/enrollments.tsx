@@ -5,12 +5,11 @@ import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { AppContext } from '../../contexts/AppContext';
 import Card from '../../components/card/Card';
-import RequirementsList from 'components/requirements/RequirementsList';
-import RequirementForm from 'components/requirements/RequirementForm';
+import EnrolleeList from 'components/enrollees/EnrolleeList';
 import { ProgramAccount } from '@coral-xyz/anchor';
 import { useState, useEffect, useContext } from 'react';
 
-const Requirements: NextPage = () => {
+const Enrollments: NextPage = () => {
   const [cert, setCert] = useState(null);
   const [addMode, setAddMode] = useState(false);
   const router = useRouter();
@@ -28,14 +27,6 @@ const Requirements: NextPage = () => {
     }
   }, [certificationAddress]);
 
-  const handleAddRequirement = () => {
-    setAddMode(true);
-  };
-
-  const closeForm = () => {
-    setAddMode(false);
-  };
-
   return (
     <Box pt={{ base: '130px', md: '80px', xl: '80px' }}>
       <Card mb='20px'>
@@ -48,26 +39,11 @@ const Requirements: NextPage = () => {
           >
             {cert?.account.title}
           </Text>
-          <RequirementsList certification={certificationAddress} />
-          <Box hidden={!addMode}>
-            <RequirementForm
-              certification={certificationAddress}
-              closeForm={closeForm}
-            />
-          </Box>
-          <Button
-            hidden={addMode}
-            onClick={handleAddRequirement}
-            mt={6}
-            maxWidth={200}
-            colorScheme='navy'
-          >
-            Add Requirement
-          </Button>
+          <EnrolleeList certification={certificationAddress} />
         </Flex>
       </Card>
     </Box>
   );
 };
 
-export default Requirements;
+export default Enrollments;

@@ -33,13 +33,23 @@ export const CertificationForm: FC = () => {
   const inputColor = useColorModeValue('gray.800', 'gray.200');
   const { connection } = useConnection();
   const wallet = useWallet();
-  const { mutate } = useMutation(
-    ({ wallet, connection, id, title, maxEnrollees, endDate }) =>
-      addCertification(wallet, connection, id, title, maxEnrollees, endDate)
-  );
+  const { mutate } = useMutation({
+    mutationFn: addCertification,
+    onSuccess: (data) => {
+      console.log('success');
+      // close form and redirect
+    },
+  });
+
+  // const { mutate } = useMutation(
+  //   ({ wallet, connection, id, title, maxEnrollees, endDate }) =>
+  //     addCertification(wallet, connection, id, title, maxEnrollees, endDate)
+  // );
 
   const handleAddCert = async (event: any) => {
     event.preventDefault();
+
+    console.log('maxEnrollees: ', maxEnrollees);
 
     mutate({
       wallet: wallet,
@@ -47,7 +57,7 @@ export const CertificationForm: FC = () => {
       id: certId,
       title: certTitle,
       maxEnrollees: maxEnrollees,
-      endDate: endDate,
+      endDate: endOption === 'enrollment_enddate' ? endDate : 0,
     });
   };
 
@@ -103,7 +113,13 @@ export const CertificationForm: FC = () => {
             isRequired={endOption === 'max_enrollees'}
           >
             <FormLabel>Max Enrollee Count</FormLabel>
-            <NumberInput width='100px' color={inputColor}>
+            <NumberInput
+              width='100px'
+              color={inputColor}
+              onChange={(valueAsString, valueAsNumber) =>
+                setMaxEnrollees(valueAsNumber)
+              }
+            >
               <NumberInputField color={inputColor} />
               <NumberInputStepper>
                 <NumberIncrementStepper />
