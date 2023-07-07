@@ -38,7 +38,7 @@ const CompletionsList = (props: {
 
   const { data: enrollmentData, isFetching: enrollmentIsFetching } = useQuery({
     queryKey: ['enrollment'],
-    queryFn: () => getEnrollment(wallet, connection, props.enrollment),
+    queryFn: () => getEnrollment(wallet, connection, props.enrollment) as any,
   });
 
   const setComplete = (req: string) => {
@@ -52,6 +52,10 @@ const CompletionsList = (props: {
     });
   };
 
+  if (!isFetching && data) {
+    data.sort((a: any, b: any) => (a.account.order > b.account.order ? 1 : -1));
+  }
+
   return (
     <Card
       flexDirection='column'
@@ -61,8 +65,6 @@ const CompletionsList = (props: {
     >
       <Box>
         {data?.map((req: any) => {
-          console.log(enrollmentData);
-
           return (
             <Flex
               key={req.account.module}
@@ -77,7 +79,7 @@ const CompletionsList = (props: {
               <Text>
                 {isBitSet(
                   req.account.order,
-                  enrollmentData.completedRequirements.toNumber()
+                  enrollmentData?.completedRequirements.toNumber()
                 ) ? (
                   <Icon as={RiCheckboxCircleLine} color='green.500' />
                 ) : (

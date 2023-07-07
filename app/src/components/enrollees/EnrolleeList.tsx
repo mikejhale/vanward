@@ -5,6 +5,7 @@ import { getEnrollees } from '../../rpc/enrollees';
 import { useQuery } from '@tanstack/react-query';
 import { shortAddress } from 'utils/address';
 import EnrolleeCard from './EnrolleeCard';
+import { getCertifications, getCertification } from 'rpc/certifications';
 
 const EnrolleeList = (props: { certification: string }) => {
   const { connection } = useConnection();
@@ -14,6 +15,11 @@ const EnrolleeList = (props: { certification: string }) => {
   const { status, data, isFetching } = useQuery({
     queryKey: ['enrollees'],
     queryFn: () => getEnrollees(wallet, connection, certification),
+  });
+
+  const { data: certData } = useQuery({
+    queryKey: ['certification'],
+    queryFn: () => getCertification(wallet, connection, certification),
   });
 
   return (
@@ -36,7 +42,8 @@ const EnrolleeList = (props: { certification: string }) => {
             <EnrolleeCard
               key={enrollee.publicKey.toString()}
               enrollee={enrollee}
-              certification={certification}
+              certification={certData}
+              certAddress={certification}
             />
           ))}
       </Flex>

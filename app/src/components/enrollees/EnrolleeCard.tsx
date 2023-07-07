@@ -56,6 +56,18 @@ const EnrolleeCard = (props: any) => {
     enrollee.account.completedRequirements
   );
 
+  let completion = null;
+  if (enrollee.account.complete) {
+    // format timestamp as YYYY-MM-DD
+    const date = new Date(enrollee.account.completedDate * 1000);
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    const formattedDate = date.toLocaleDateString();
+
+    completion = <Text>Completion Date: {formattedDate}</Text>;
+  }
+
   return (
     <Card
       maxW='md'
@@ -107,21 +119,15 @@ const EnrolleeCard = (props: any) => {
       </CardBody>
       <Divider borderColor={divderColor} />
       <CardFooter justify={'flex-end'} alignItems='center' flexWrap='wrap'>
-        <Box flexGrow='1'>
-          {enrollee.account.complete ? (
-            <Text>
-              Completion Date: {enrollee.account.completedDate.toString()}
-            </Text>
-          ) : null}
-        </Box>
-        {enrollee.complete ? (
+        <Box flexGrow='1'>{completion}</Box>
+        {requirementsComplete === props.certification?.requirementsCount ? (
           <Icon boxSize={8} as={RiCheckDoubleFill} color='green.500' />
         ) : (
           <Tooltip hasArrow label='Requirements' placement='top'>
             <NextLink
               href={
                 '/certifications/completions?cert=' +
-                props.certification +
+                props.certAddress +
                 '&enrollee=' +
                 enrollee.publicKey.toString()
               }

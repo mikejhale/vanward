@@ -1,4 +1,4 @@
-import { web3, utils, BN } from '@coral-xyz/anchor';
+import { web3, utils, BN, ProgramAccount } from '@coral-xyz/anchor';
 import { getProgram } from './program';
 import { getFilter } from './memcmpFilter';
 import { PublicKey } from '@solana/web3.js';
@@ -21,6 +21,17 @@ export const getCertifications = async (
   const certs = await program.account.certification.all(filter);
 
   return certs;
+};
+
+export const getCertification = async (
+  wallet: any,
+  connection: web3.Connection,
+  certification: string
+) => {
+  const program = getProgram(wallet, connection);
+  const cert = await program.account.certification.fetchNullable(certification);
+
+  return cert;
 };
 
 export const addCertification = async (args: addCertArgs) => {
