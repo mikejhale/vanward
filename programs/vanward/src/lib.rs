@@ -38,6 +38,11 @@ pub mod vanward {
         enrollment::enroll(ctx)
     }
 
+    // enroll in certification as a professional
+    pub fn close_enrollment(ctx: Context<CloseEnrollment>) -> Result<()> {
+        enrollment::close_enrollment(ctx)
+    }
+
     // mark requirement as complete
     pub fn complete_requirement(ctx: Context<CompleteRequirement>) -> Result<()> {
         requirement::complete_requirement(ctx)

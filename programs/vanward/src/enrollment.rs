@@ -1,6 +1,8 @@
 use anchor_lang::prelude::*;
 
-use crate::{contexts::enroll::Enroll, errors::EnrollmentError};
+use crate::{
+    contexts::close_enrollment::CloseEnrollment, contexts::enroll::Enroll, errors::EnrollmentError,
+};
 
 // enroll in certification as a professiona;
 pub fn enroll(ctx: Context<Enroll>) -> Result<()> {
@@ -35,5 +37,9 @@ pub fn enroll(ctx: Context<Enroll>) -> Result<()> {
     enrollment.complete = false;
     enrollment.completed_requirements = 0;
     enrollment.bump = *ctx.bumps.get("enrollment").unwrap();
+    Ok(())
+}
+
+pub fn close_enrollment(ctx: Context<CloseEnrollment>) -> Result<()> {
     Ok(())
 }

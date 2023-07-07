@@ -20,9 +20,20 @@ export const getEnrollees = async (
   const filter = getFilter(8 + 64, new PublicKey(certification).toBase58());
   const enrollments = await program.account.enrollment.all(filter);
 
-  console.log('Enrollments', enrollments);
-
   return enrollments;
+};
+
+export const getEnrollment = async (
+  wallet: any,
+  connection: web3.Connection,
+  enrollment: string
+) => {
+  const program = getProgram(wallet, connection);
+  const enrollmentAcct = await program.account.enrollment.fetchNullable(
+    enrollment
+  );
+
+  return enrollmentAcct;
 };
 
 export const addEnrollee = async (args: requirementArgs) => {

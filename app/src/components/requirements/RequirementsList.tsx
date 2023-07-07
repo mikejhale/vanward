@@ -44,6 +44,7 @@ const RequirementsList = (props: { certification: string }) => {
   const [reqData, setReqData] = useState([]);
   const textColor = useColorModeValue('secondaryGray.900', 'white');
   const borderColor = useColorModeValue('gray.200', 'whiteAlpha.100');
+  const altRowBgColor = useColorModeValue('gray.100', 'navy.700');
 
   const { data, isFetching } = useQuery({
     queryKey: ['requirements'],
@@ -51,7 +52,6 @@ const RequirementsList = (props: { certification: string }) => {
   });
 
   useEffect(() => {
-    console.log('req data', data);
     const reqs = data?.map((req: any) => {
       return {
         module: req.account.module,
@@ -166,7 +166,7 @@ const RequirementsList = (props: { certification: string }) => {
             {table
               .getRowModel()
               .rows.slice(0, 11)
-              .map((row) => {
+              .map((row, i) => {
                 return (
                   <Tr key={row.id}>
                     {row.getVisibleCells().map((cell) => {
@@ -175,6 +175,10 @@ const RequirementsList = (props: { certification: string }) => {
                           key={cell.id}
                           minW={{ sm: '150px', md: '200px', lg: 'auto' }}
                           borderColor='transparent'
+                          borderBottom={`4px solid ${borderColor}`}
+                          backgroundColor={
+                            i % 2 === 0 ? altRowBgColor : 'transparent'
+                          }
                         >
                           {flexRender(
                             cell.column.columnDef.cell,

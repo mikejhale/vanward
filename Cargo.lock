@@ -61,7 +61,7 @@ dependencies = [
 [[package]]
 name = "anchor-attribute-access-control"
 version = "0.28.0"
-source = "git+https://github.com/coral-xyz/anchor.git#d41e5133516e2e39ddf36a8885db2b8e47ac7f02"
+source = "git+https://github.com/coral-xyz/anchor.git#9ff7dfcf6fa4456f1a356172fd4b94324591e3a6"
 dependencies = [
  "anchor-syn",
  "anyhow",
@@ -74,7 +74,7 @@ dependencies = [
 [[package]]
 name = "anchor-attribute-account"
 version = "0.28.0"
-source = "git+https://github.com/coral-xyz/anchor.git#d41e5133516e2e39ddf36a8885db2b8e47ac7f02"
+source = "git+https://github.com/coral-xyz/anchor.git#9ff7dfcf6fa4456f1a356172fd4b94324591e3a6"
 dependencies = [
  "anchor-syn",
  "anyhow",
@@ -88,7 +88,7 @@ dependencies = [
 [[package]]
 name = "anchor-attribute-constant"
 version = "0.28.0"
-source = "git+https://github.com/coral-xyz/anchor.git#d41e5133516e2e39ddf36a8885db2b8e47ac7f02"
+source = "git+https://github.com/coral-xyz/anchor.git#9ff7dfcf6fa4456f1a356172fd4b94324591e3a6"
 dependencies = [
  "anchor-syn",
  "proc-macro2",
@@ -98,7 +98,7 @@ dependencies = [
 [[package]]
 name = "anchor-attribute-error"
 version = "0.28.0"
-source = "git+https://github.com/coral-xyz/anchor.git#d41e5133516e2e39ddf36a8885db2b8e47ac7f02"
+source = "git+https://github.com/coral-xyz/anchor.git#9ff7dfcf6fa4456f1a356172fd4b94324591e3a6"
 dependencies = [
  "anchor-syn",
  "proc-macro2",
@@ -109,7 +109,7 @@ dependencies = [
 [[package]]
 name = "anchor-attribute-event"
 version = "0.28.0"
-source = "git+https://github.com/coral-xyz/anchor.git#d41e5133516e2e39ddf36a8885db2b8e47ac7f02"
+source = "git+https://github.com/coral-xyz/anchor.git#9ff7dfcf6fa4456f1a356172fd4b94324591e3a6"
 dependencies = [
  "anchor-syn",
  "anyhow",
@@ -121,7 +121,7 @@ dependencies = [
 [[package]]
 name = "anchor-attribute-program"
 version = "0.28.0"
-source = "git+https://github.com/coral-xyz/anchor.git#d41e5133516e2e39ddf36a8885db2b8e47ac7f02"
+source = "git+https://github.com/coral-xyz/anchor.git#9ff7dfcf6fa4456f1a356172fd4b94324591e3a6"
 dependencies = [
  "anchor-syn",
  "anyhow",
@@ -133,7 +133,7 @@ dependencies = [
 [[package]]
 name = "anchor-derive-accounts"
 version = "0.28.0"
-source = "git+https://github.com/coral-xyz/anchor.git#d41e5133516e2e39ddf36a8885db2b8e47ac7f02"
+source = "git+https://github.com/coral-xyz/anchor.git#9ff7dfcf6fa4456f1a356172fd4b94324591e3a6"
 dependencies = [
  "anchor-syn",
  "anyhow",
@@ -145,7 +145,7 @@ dependencies = [
 [[package]]
 name = "anchor-derive-space"
 version = "0.28.0"
-source = "git+https://github.com/coral-xyz/anchor.git#d41e5133516e2e39ddf36a8885db2b8e47ac7f02"
+source = "git+https://github.com/coral-xyz/anchor.git#9ff7dfcf6fa4456f1a356172fd4b94324591e3a6"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -155,7 +155,7 @@ dependencies = [
 [[package]]
 name = "anchor-lang"
 version = "0.28.0"
-source = "git+https://github.com/coral-xyz/anchor.git#d41e5133516e2e39ddf36a8885db2b8e47ac7f02"
+source = "git+https://github.com/coral-xyz/anchor.git#9ff7dfcf6fa4456f1a356172fd4b94324591e3a6"
 dependencies = [
  "anchor-attribute-access-control",
  "anchor-attribute-account",
@@ -178,7 +178,7 @@ dependencies = [
 [[package]]
 name = "anchor-spl"
 version = "0.28.0"
-source = "git+https://github.com/coral-xyz/anchor.git#d41e5133516e2e39ddf36a8885db2b8e47ac7f02"
+source = "git+https://github.com/coral-xyz/anchor.git#9ff7dfcf6fa4456f1a356172fd4b94324591e3a6"
 dependencies = [
  "anchor-lang",
  "solana-program",
@@ -190,7 +190,7 @@ dependencies = [
 [[package]]
 name = "anchor-syn"
 version = "0.28.0"
-source = "git+https://github.com/coral-xyz/anchor.git#d41e5133516e2e39ddf36a8885db2b8e47ac7f02"
+source = "git+https://github.com/coral-xyz/anchor.git#9ff7dfcf6fa4456f1a356172fd4b94324591e3a6"
 dependencies = [
  "anyhow",
  "bs58 0.5.0",

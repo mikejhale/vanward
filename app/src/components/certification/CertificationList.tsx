@@ -26,7 +26,6 @@ const CertificationList = (props: any) => {
 
   useEffect(() => {
     if (status === 'success') {
-      console.log('certs', data);
       appCtx.certifications = data;
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

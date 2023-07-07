@@ -1,15 +1,19 @@
 // chakra imports
 import { Box, Flex, Stack, Text } from '@chakra-ui/react';
-//   Custom components
+import { useRouter } from 'next/router';
 import Brand from 'components/sidebar/components/Brand';
 import { SidebarLink } from './SidebarLink';
+import { SubLink } from './SubLink';
 import { TbAwardFilled } from 'react-icons/tb';
 import { HiUsers } from 'react-icons/hi';
+import { MdFormatListBulletedAdd } from 'react-icons/md';
 
 // FUNCTIONS
 
 function SidebarContent() {
-  // SIDEBAR
+  const router = useRouter();
+  const hasCert = router.query.cert ? true : false;
+
   return (
     <Flex direction='column' height='100%' pt='25px' borderRadius='30px'>
       <Brand />
@@ -20,6 +24,22 @@ function SidebarContent() {
             group='certifications'
             label='Certifications'
             icon={<TbAwardFilled />}
+          />
+          <SubLink
+            hidden={!hasCert}
+            href='/certifications/reqs'
+            group='certifications'
+            label='Requirements'
+            queryString={'?cert=' + router.query.cert}
+            icon={<MdFormatListBulletedAdd />}
+          />
+          <SubLink
+            hidden={!hasCert}
+            href='/certifications/enrollments'
+            group='certifications'
+            label='Enrollments'
+            queryString={'?cert=' + router.query.cert}
+            icon={<HiUsers />}
           />
           <SidebarLink
             href='/enrollees/list'

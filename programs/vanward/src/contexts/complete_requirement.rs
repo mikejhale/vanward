@@ -19,5 +19,6 @@ pub struct CompleteRequirement<'info> {
     #[account(has_one = authority)]
     pub certification: Account<'info, Certification>,
 
+    // TODO: Is this needed?
     pub system_program: Program<'info, System>,
 }

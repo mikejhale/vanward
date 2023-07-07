@@ -39,6 +39,7 @@ pub fn complete_requirement(ctx: Context<CompleteRequirement>) -> Result<()> {
 
     if complete_num == checked_num {
         ctx.accounts.enrollment.complete = true;
+        ctx.accounts.enrollment.completed_date = Clock::get()?.unix_timestamp;
     }
 
     Ok(())

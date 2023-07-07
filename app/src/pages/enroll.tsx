@@ -4,7 +4,7 @@ import type { NextPage } from 'next';
 import EnrollForm from '../components/enrollees/EnrollForm';
 import { useWallet } from '@solana/wallet-adapter-react';
 
-const certification = '75cprkUZagXcDZm7tm8tZLQ1hD4P32aQhdfpw2MJ7zen';
+const certification = '3D7q2u9jvkdqEWc9bXY8k5L6VYcTD2swQy2ZdE7qpPoM';
 
 const Certifications: NextPage = () => {
   const wallet = useWallet();

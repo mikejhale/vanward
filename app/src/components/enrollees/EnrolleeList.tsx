@@ -3,6 +3,8 @@ import { useConnection, useWallet } from '@solana/wallet-adapter-react';
 //import { Certification } from '../../types/certification';
 import { getEnrollees } from '../../rpc/enrollees';
 import { useQuery } from '@tanstack/react-query';
+import { shortAddress } from 'utils/address';
+import EnrolleeCard from './EnrolleeCard';
 
 const EnrolleeList = (props: { certification: string }) => {
   const { connection } = useConnection();
@@ -17,7 +19,7 @@ const EnrolleeList = (props: { certification: string }) => {
   return (
     <>
       <Flex wrap='wrap' alignItems='center' gap={4}>
-        {status === 'error' && <div>Could not get Certifications</div>}
+        {status === 'error' && <div>Could not get Enrollees</div>}
         {isFetching && (
           <Spinner
             thickness='4px'
@@ -31,9 +33,11 @@ const EnrolleeList = (props: { certification: string }) => {
         {status === 'success' &&
           data.length > 0 &&
           data.map((enrollee: any) => (
-            <div key={enrollee.publicKey.toString()}>
-              {enrollee.publicKey.toString()}
-            </div>
+            <EnrolleeCard
+              key={enrollee.publicKey.toString()}
+              enrollee={enrollee}
+              certification={certification}
+            />
           ))}
       </Flex>
     </>

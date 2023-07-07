@@ -3,7 +3,7 @@ import { getProgram } from './program';
 import { getFilter } from './memcmpFilter';
 import { PublicKey } from '@solana/web3.js';
 
-interface requirementArgs {
+interface AddRequirementArgs {
   wallet: any;
   connection: web3.Connection;
   certification: string;
@@ -11,12 +11,19 @@ interface requirementArgs {
   credits: number;
 }
 
+interface CompleteRequirementArgs {
+  wallet: any;
+  connection: web3.Connection;
+  enrollment: string;
+  requirement: string;
+  certification: string;
+}
+
 export const getRequirements = async (
   wallet: any,
   connection: web3.Connection,
   certification: string
 ) => {
-  console.log('reqs rpc: certification', certification);
   const program = getProgram(wallet, connection);
   const filter = getFilter(8, new PublicKey(certification).toBase58());
   const reqs = await program.account.requirement.all(filter);
@@ -24,17 +31,10 @@ export const getRequirements = async (
   return reqs;
 };
 
-export const addRequirement = async (args: requirementArgs) => {
+export const addRequirement = async (args: AddRequirementArgs) => {
   console.log('adding requirement...');
 
-  console.log('wallet', args.wallet);
-  console.log('connection', args.connection);
-  console.log('certification', args.certification);
-  console.log('module', args.module);
-  console.log('credits', args.credits);
-
   const program = getProgram(args.wallet, args.connection);
-
   const [requirementPda] = await PublicKey.findProgramAddressSync(
     [
       utils.bytes.utf8.encode('requirement'),
@@ -57,4 +57,25 @@ export const addRequirement = async (args: requirementArgs) => {
   console.log('Account Created (Requirement)', tx);
 
   return { module: args.module, credits: args.credits };
+};
+
+export const completeRequirement = async (args: CompleteRequirementArgs) => {
+  const program = getProgram(args.wallet, args.connection);
+
+  console.log(args)
+
+  const tx = await program.methods
+    .completeRequirement()
+    .accounts({
+      authority: args.wallet.publicKey,
+      enrollment: args.enrollment,
+      requirement: args.requirement,
+      certification: args.certification,
+      systemProgram: web3.SystemProgram.programId,
+    })
+    .rpc();
+
+  console.log('Requirement Completed: ', tx);
+
+  return tx;
 };

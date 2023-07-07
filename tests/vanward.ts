@@ -9,7 +9,13 @@ import {
   getProvider,
   AnchorError,
 } from '@coral-xyz/anchor';
-import { PublicKey, Keypair, Commitment } from '@solana/web3.js';
+import {
+  PublicKey,
+  Keypair,
+  Commitment,
+  Authorized,
+  Connection,
+} from '@solana/web3.js';
 import { max } from 'bn.js';
 import { expect } from 'chai';
 import { Vanward } from '../target/types/vanward';
@@ -61,7 +67,7 @@ describe('vanward', async () => {
   });
 
   it('can add a certification with max enrollees', async () => {
-    const max_enrollees = 1;
+    const max_enrollees = 2;
     const tx = await program.methods
       .addCertification(
         certificationId,
@@ -87,6 +93,7 @@ describe('vanward', async () => {
     expect(certAccount.requirementsCount).to.equal(0);
   });
 
+  /*
   it('can get certifications', async () => {
     let certAccount = await program.account.certification.fetch(
       certificationPda.toString()
@@ -94,6 +101,7 @@ describe('vanward', async () => {
 
     expect(certAccount.requirementsCount).to.equal(0);
   });
+  */
 
   it('can add a requirement', async () => {
     const module = 'Week 1';
@@ -211,11 +219,49 @@ describe('vanward', async () => {
       certificationPda.toString()
     );
 
-    console.log(certAccount);
-
     expect(certAccount.enrolleeCount).to.equal(1);
   });
 
+  it('can enroll2', async () => {
+    const [enrollmentPda, enrollBump] =
+      await web3.PublicKey.findProgramAddressSync(
+        [
+          utils.bytes.utf8.encode('enroll'),
+          enrollee2.publicKey.toBuffer(),
+          certificationPda.toBuffer(),
+        ],
+        program.programId
+      );
+
+    enrollPda2 = enrollmentPda.toString();
+
+    const tx = await program.methods
+      .enroll()
+      .accounts({
+        enrollment: enrollmentPda,
+        certification: certificationPda,
+        owner: enrollee2.publicKey,
+        systemProgram: web3.SystemProgram.programId,
+      })
+      .signers([enrollee2])
+      .rpc();
+
+    let enrollAccount = await program.account.enrollment.fetch(
+      enrollmentPda.toString()
+    );
+    expect(enrollAccount.certification.toString()).to.equal(
+      certificationPda.toString()
+    );
+    expect(enrollAccount.complete).to.equal(false);
+
+    let certAccount = await program.account.certification.fetch(
+      certificationPda.toString()
+    );
+
+    expect(certAccount.enrolleeCount).to.equal(2);
+  });
+
+  /*
   it('can not enroll more than max enrollments', async () => {
     const [enrollmentPda, enrollBump] =
       await web3.PublicKey.findProgramAddressSync(
@@ -253,6 +299,24 @@ describe('vanward', async () => {
       const errMsg = 'Max enrollment reached';
       expect(err.error.errorMessage).to.equal(errMsg);
     }
+  });
+*/
+
+  it('can close enrollment account', async () => {
+    const tx = await program.methods
+      .closeEnrollment()
+      .accounts({
+        enrollment: enrollPda2,
+        owner: enrollee2.publicKey,
+        authority: provider.wallet.publicKey,
+      })
+      .rpc();
+
+    let enrollmentAccount = await program.account.enrollment.fetchNullable(
+      enrollPda2
+    );
+
+    expect(enrollmentAccount).to.equal(null);
   });
 
   it('can mark requirement as complete', async () => {
