@@ -111,8 +111,8 @@ const EnrolleeCard = (props: any) => {
         <Box w='100%' mt='auto'>
           <Flex w='100%' justify='space-between' mb='10px'>
             <Text color={textColorSecondary}>
-              {requirementsComplete} completed requirement
-              {requirementsComplete !== 1 ? 's' : ''}
+              {requirementsComplete}/{props.certification?.requirementsCount}{' '}
+              completed requirements
             </Text>
           </Flex>
         </Box>

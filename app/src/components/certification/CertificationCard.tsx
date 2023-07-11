@@ -31,6 +31,7 @@ const CertificationCard = (props: any) => {
     'secondaryGray.700'
   );
   const [value, copy] = useCopyToClipboard();
+  const [enrollValue, enrollCopy] = useCopyToClipboard();
   const toast = useToast();
   const certification = props.certification;
 
@@ -45,6 +46,8 @@ const CertificationCard = (props: any) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value]);
+
+  console.log('enrollValue', enrollValue);
 
   return (
     <Card
@@ -120,7 +123,11 @@ const CertificationCard = (props: any) => {
           textAlign='left'
           alignItems='center'
           mt={2}
-        ></Flex>
+        >
+          <Text onClick={() => enrollCopy('/enroll?cert=' + props.publickey)}>
+            {enrollValue ? 'Copied!' : 'Copy enrollment URL'}
+          </Text>
+        </Flex>
       </CardBody>
       <Divider borderColor={divderColor} />
       <CardFooter justify={'flex-end'} alignItems='center' flexWrap='wrap'>
