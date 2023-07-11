@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC } from 'react';
 import { Box, Text } from '@chakra-ui/react';
 
 export const NotConnected: FC = () => {

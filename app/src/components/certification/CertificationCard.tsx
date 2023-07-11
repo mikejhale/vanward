@@ -47,8 +47,6 @@ const CertificationCard = (props: any) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value]);
 
-  console.log('enrollValue', enrollValue);
-
   return (
     <Card
       maxW='md'

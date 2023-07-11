@@ -1,11 +1,9 @@
 import { Flex, Spinner } from '@chakra-ui/react';
 import { useConnection, useWallet } from '@solana/wallet-adapter-react';
-//import { Certification } from '../../types/certification';
 import { getEnrollees } from '../../rpc/enrollees';
 import { useQuery } from '@tanstack/react-query';
-import { shortAddress } from 'utils/address';
 import EnrolleeCard from './EnrolleeCard';
-import { getCertifications, getCertification } from 'rpc/certifications';
+import { getCertification } from 'rpc/certifications';
 
 const EnrolleeList = (props: { certification: string }) => {
   const { connection } = useConnection();

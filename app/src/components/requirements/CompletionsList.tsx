@@ -8,7 +8,7 @@ import {
 } from '@chakra-ui/react';
 import { useConnection, useWallet } from '@solana/wallet-adapter-react';
 import { getRequirements, completeRequirement } from '../../rpc/requirements';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 
 import { getEnrollment } from '../../rpc/enrollees';
 import { isBitSet } from '../../utils/numbers';

@@ -1,6 +1,5 @@
 import { FC, useEffect, useState } from 'react';
-import dynamic from 'next/dynamic';
-import { useStyleConfig, defineStyleConfig } from '@chakra-ui/react';
+import { useStyleConfig } from '@chakra-ui/react';
 import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
 
 // const WalletMultiButtonDynamic = dynamic(

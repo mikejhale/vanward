@@ -18,8 +18,6 @@ import {
 import { shortAddress } from 'utils/address';
 import { countBitsSet } from 'utils/numbers';
 import NextLink from 'next/link';
-import { HiUsers } from 'react-icons/hi';
-import {} from 'react-icons/ri';
 import {
   RiCheckboxCircleLine,
   RiFileCopy2Line,
@@ -60,9 +58,6 @@ const EnrolleeCard = (props: any) => {
   if (enrollee.account.complete) {
     // format timestamp as YYYY-MM-DD
     const date = new Date(enrollee.account.completedDate * 1000);
-    const year = date.getFullYear();
-    const month = date.getMonth() + 1;
-    const day = date.getDate();
     const formattedDate = date.toLocaleDateString();
 
     completion = <Text>Completion Date: {formattedDate}</Text>;

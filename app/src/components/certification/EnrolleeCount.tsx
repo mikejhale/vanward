@@ -13,7 +13,7 @@ const EnrolleeCount = (props: EnrolleeCountProps) => {
     <Box w='100%' mt='auto'>
       <Flex w='100%' justify='space-between' mb='10px'>
         <Text color={textColor} fontSize='sm' maxW='40%'>
-          {enrolleeCount.toString()} Enrollees
+          {enrolleeCount.toString()} Enrollee{enrolleeCount !== 1 ? 's' : ''}
         </Text>
         <Text color={textColor} fontSize='sm' maxW='40%'>
           MAX {props.max}

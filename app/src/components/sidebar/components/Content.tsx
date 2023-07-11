@@ -41,12 +41,12 @@ function SidebarContent() {
             queryString={'?cert=' + router.query.cert}
             icon={<HiUsers />}
           />
-          <SidebarLink
+          {/*<SidebarLink
             href='/enrollees/list'
             group='enrollees'
             label='Enrollees'
             icon={<HiUsers />}
-          />
+  />*/}
         </Box>
       </Stack>
 
