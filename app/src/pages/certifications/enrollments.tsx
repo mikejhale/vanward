@@ -1,10 +1,9 @@
 // Chakra imports
-import { Text, Box, Flex, useColorModeValue } from '@chakra-ui/react';
+import { Box } from '@chakra-ui/react';
 // Assets
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { AppContext } from '../../contexts/AppContext';
-import Card from '../../components/card/Card';
 import EnrolleeList from 'components/enrollees/EnrolleeList';
 import { ProgramAccount } from '@coral-xyz/anchor';
 import { useState, useEffect, useContext } from 'react';
@@ -12,7 +11,6 @@ import { useState, useEffect, useContext } from 'react';
 const Enrollments: NextPage = () => {
   const [cert, setCert] = useState(null);
   const router = useRouter();
-  const textColorPrimary = useColorModeValue('secondaryGray.900', 'white');
   const appCtx = useContext(AppContext);
   const certificationAddress = router.query.cert as string;
 

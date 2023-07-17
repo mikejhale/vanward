@@ -1,5 +1,5 @@
 // Chakra imports
-import { Text, Button, Box, Flex, useColorModeValue } from '@chakra-ui/react';
+import { Text, Box, Flex, useColorModeValue } from '@chakra-ui/react';
 // Assets
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';

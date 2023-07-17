@@ -40,6 +40,6 @@ pub fn enroll(ctx: Context<Enroll>) -> Result<()> {
     Ok(())
 }
 
-pub fn close_enrollment(ctx: Context<CloseEnrollment>) -> Result<()> {
+pub fn close_enrollment(_ctx: Context<CloseEnrollment>) -> Result<()> {
     Ok(())
 }
