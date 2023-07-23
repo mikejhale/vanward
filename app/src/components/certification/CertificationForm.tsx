@@ -47,7 +47,7 @@ export const CertificationForm: FC = () => {
       connection: connection,
       id: certId,
       title: certTitle,
-      maxEnrollees: maxEnrollees,
+      maxEnrollees: endOption === 'max_enrollees' ? maxEnrollees : 0,
       endDate: endOption === 'enrollment_enddate' ? endDate : 0,
     });
   };

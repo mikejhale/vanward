@@ -104,7 +104,7 @@ describe('vanward', async () => {
   */
 
   it('can add a requirement', async () => {
-    const module = 'Week 1';
+    const module = 'Week ' + certificationId;
     const credits = 1;
 
     const [requirementPda, requirementBump] =
@@ -144,7 +144,7 @@ describe('vanward', async () => {
   });
 
   it('can add a second requirement', async () => {
-    const module = 'Week 2';
+    const module = 'Week 2 ' + certificationId;
     const credits = 1;
 
     const [requirementPda, requirementBump] =

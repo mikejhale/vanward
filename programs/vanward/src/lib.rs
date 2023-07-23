@@ -5,10 +5,11 @@ mod contexts;
 mod enrollment;
 mod errors;
 mod models;
+mod nft;
 mod requirement;
 use contexts::*;
 
-declare_id!("4AmPAMovn48nui76YZ6pN8ztchfb8QMybnG3a3SYb7eV");
+declare_id!("9aLFmxHoJTUZT6s5ak2dQZ3AXdtYmSNrve6hbRESdT86");
 
 #[program]
 pub mod vanward {
@@ -46,5 +47,15 @@ pub mod vanward {
     // mark requirement as complete
     pub fn complete_requirement(ctx: Context<CompleteRequirement>) -> Result<()> {
         requirement::complete_requirement(ctx)
+    }
+
+    pub fn mint_nft(
+        ctx: Context<MintNFT>,
+        creator_key: Pubkey,
+        symbol: String,
+        uri: String,
+        title: String,
+    ) -> Result<()> {
+        nft::mint_nft(ctx, creator_key, symbol, uri, title)
     }
 }
