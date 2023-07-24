@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { useState } from 'react';
 import {
   Box,
@@ -7,6 +7,7 @@ import {
   FormLabel,
   Input,
   Select,
+  Switch,
   NumberInput,
   NumberInputField,
   NumberInputStepper,
@@ -19,11 +20,14 @@ import { useMutation } from '@tanstack/react-query';
 import { useConnection, useWallet } from '@solana/wallet-adapter-react';
 import { addCertification } from 'rpc/certifications';
 import DatePicker from '../datepicker/DatePicker';
+import NftForm from './NftForm';
 
 export const CertificationForm: FC = () => {
   const [certId, setCertId] = useState('');
   const [endOption, setEndOption] = useState('');
+  const [addingNft, setAddingNft] = useState(false);
   const [certTitle, setCertTitle] = useState('');
+  const [issueNft, setIssueNft] = useState(false);
   const [maxEnrollees, setMaxEnrollees] = useState(0);
   const [endDate, setEndDate] = useState(0);
   const inputColor = useColorModeValue('gray.800', 'gray.200');
@@ -39,8 +43,6 @@ export const CertificationForm: FC = () => {
 
   const handleAddCert = async (event: any) => {
     event.preventDefault();
-
-    console.log('maxEnrollees: ', maxEnrollees);
 
     mutate({
       wallet: wallet,
@@ -58,8 +60,18 @@ export const CertificationForm: FC = () => {
 
   const handleSelectDate = (date: number) => {
     setEndDate(date);
-    console.log('Selected Date: ', date);
   };
+
+  const handleIssueNft = (event: any) => {
+    setIssueNft(event.target.checked);
+    event.target.checked ? setAddingNft(true) : setAddingNft(false);
+  };
+
+  // useEffect(() => {
+  //   console.log('Issue NFT', issueNft);
+  // }, [issueNft]);
+
+  // console.log('Adding NFT', addingNft);
 
   return (
     <>
@@ -128,9 +140,19 @@ export const CertificationForm: FC = () => {
             <DatePicker selectDate={handleSelectDate} />
           </FormControl>
 
+          <FormControl display='flex' alignItems='center'>
+            <FormLabel htmlFor='issuenft' mb='0'>
+              Issue NFT on completion?
+            </FormLabel>
+            <Switch id='issuenft' onChange={handleIssueNft} />
+          </FormControl>
+
+          {issueNft && <NftForm addingNft={setAddingNft} />}
+
           <Button
+            isDisabled={addingNft}
             width='200px'
-            mt={4}
+            mt={8}
             type='submit'
             //backgroundColor={useColorModeValue('brand.500', 'gray.200')}
             colorScheme={'navy'}
