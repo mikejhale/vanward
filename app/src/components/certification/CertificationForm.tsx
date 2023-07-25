@@ -8,6 +8,7 @@ import {
   Input,
   Select,
   Switch,
+  Text,
   NumberInput,
   NumberInputField,
   NumberInputStepper,
@@ -27,6 +28,7 @@ export const CertificationForm: FC = () => {
   const [endOption, setEndOption] = useState('');
   const [addingNft, setAddingNft] = useState(false);
   const [certTitle, setCertTitle] = useState('');
+  const [nftUri, setNftUri] = useState('');
   const [issueNft, setIssueNft] = useState(false);
   const [maxEnrollees, setMaxEnrollees] = useState(0);
   const [endDate, setEndDate] = useState(0);
@@ -51,6 +53,7 @@ export const CertificationForm: FC = () => {
       title: certTitle,
       maxEnrollees: endOption === 'max_enrollees' ? maxEnrollees : 0,
       endDate: endOption === 'enrollment_enddate' ? endDate : 0,
+      nftUri: issueNft ? nftUri : '',
     });
   };
 
@@ -64,14 +67,28 @@ export const CertificationForm: FC = () => {
 
   const handleIssueNft = (event: any) => {
     setIssueNft(event.target.checked);
-    event.target.checked ? setAddingNft(true) : setAddingNft(false);
+    event.target.checked && !nftUri ? setAddingNft(true) : setAddingNft(false);
+  };
+
+  const handleAddNft = (imgUri: string) => {
+    console.log('imgUri', imgUri);
+    setAddingNft(false);
+    setNftUri(imgUri);
   };
 
   // useEffect(() => {
   //   console.log('Issue NFT', issueNft);
   // }, [issueNft]);
 
-  // console.log('Adding NFT', addingNft);
+  console.log('Adding NFT', addingNft);
+
+  const nft = () => {
+    if (issueNft && !nftUri) {
+      return <NftForm addingNft={setAddingNft} nftUri={handleAddNft} />;
+    } else if (issueNft && nftUri) {
+      return <Text>{nftUri}</Text>;
+    }
+  };
 
   return (
     <>
@@ -147,7 +164,7 @@ export const CertificationForm: FC = () => {
             <Switch id='issuenft' onChange={handleIssueNft} />
           </FormControl>
 
-          {issueNft && <NftForm addingNft={setAddingNft} />}
+          {nft()}
 
           <Button
             isDisabled={addingNft}

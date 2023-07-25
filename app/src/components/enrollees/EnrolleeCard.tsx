@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import {
   Text,
   Card,
+  Button,
   CardBody,
   CardHeader,
   Flex,
@@ -23,7 +24,12 @@ import {
   RiFileCopy2Line,
   RiCheckDoubleFill,
 } from 'react-icons/ri';
+import { useConnection, useWallet } from '@solana/wallet-adapter-react';
+import { getProgram } from '../../rpc/program';
 import { useCopyToClipboard } from '../../hooks/useCopyToClipboard';
+import metadata from '../../assets/json/metadata.js';
+import { nftStorageUploadMetadata } from '../../utils/uploads';
+import { mintNft } from '../../utils/nft';
 
 const EnrolleeCard = (props: any) => {
   const textColor = useColorModeValue('secondaryGray.900', 'white');
@@ -37,6 +43,9 @@ const EnrolleeCard = (props: any) => {
   const [value, copy] = useCopyToClipboard();
   const toast = useToast();
   const enrollee = props.enrollee;
+  const wallet = useWallet();
+  const { connection } = useConnection();
+  const program = getProgram(wallet, connection);
 
   useEffect(() => {
     if (value) {
@@ -62,6 +71,43 @@ const EnrolleeCard = (props: any) => {
 
     completion = <Text>Completion Date: {formattedDate}</Text>;
   }
+
+  const handleMintNft = async () => {
+    console.log('minting nft');
+
+    var date = new Date();
+
+    // Get year, month, and day part from the date
+    var year = date.toLocaleString('default', { year: 'numeric' });
+    var month = date.toLocaleString('default', { month: '2-digit' });
+    var day = date.toLocaleString('default', { day: '2-digit' });
+
+    // Generate yyyy-mm-dd date string
+    var formattedDate = year + '-' + month + '-' + day;
+
+    metadata.name = props.certification?.title;
+    metadata.image = props.certification?.nftUri;
+    metadata.attributes[0].value = props.certification?.id;
+    metadata.attributes[1].value = formattedDate;
+    metadata.attributes[2].value = enrollee.account.owner.toString();
+    metadata.properties.files[0].uri = props.certification?.nftUri;
+    metadata.properties.files[0].type =
+      'image/' + props.certification?.nftUri.split('.').pop();
+    metadata.properties.creators[0].address = wallet.publicKey.toString();
+
+    //const metadataUri = await nftStorageUploadMetadata(metadata, wallet);
+    const metadataUri =
+      'https://bafkreibq2d62lzmh5tylv32jh6drxkg55gqsh6sg3nmnza2vdymiq5voky.ipfs.nftstorage.link/';
+
+    console.log(enrollee.account.owner.toString());
+    const mintTx = await mintNft(
+      wallet,
+      program,
+      props.certification?.title,
+      metadataUri,
+      enrollee.account.owner
+    );
+  };
 
   return (
     <Card
@@ -110,6 +156,16 @@ const EnrolleeCard = (props: any) => {
               completed requirements
             </Text>
           </Flex>
+          <Button
+            hidden={
+              requirementsComplete !== props.certification?.requirementsCount ||
+              !props.certification?.nftUri?.startsWith('http')
+            }
+            colorScheme='navy'
+            onClick={handleMintNft}
+          >
+            Issue NFT
+          </Button>
         </Box>
       </CardBody>
       <Divider borderColor={divderColor} />

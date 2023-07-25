@@ -37,6 +37,10 @@
         {
           "name": "enrollmentEnddate",
           "type": "i64"
+        },
+        {
+          "name": "nftUri",
+          "type": "string"
         }
       ]
     },
@@ -102,6 +106,27 @@
       "args": []
     },
     {
+      "name": "closeEnrollment",
+      "accounts": [
+        {
+          "name": "enrollment",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "owner",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "authority",
+          "isMut": false,
+          "isSigner": true
+        }
+      ],
+      "args": []
+    },
+    {
       "name": "completeRequirement",
       "accounts": [
         {
@@ -131,6 +156,79 @@
         }
       ],
       "args": []
+    },
+    {
+      "name": "mintNft",
+      "accounts": [
+        {
+          "name": "mintAuthority",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "mint",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "metadata",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "tokenAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "tokenMetadataProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "payer",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "rent",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "masterEdition",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "creatorKey",
+          "type": "publicKey"
+        },
+        {
+          "name": "symbol",
+          "type": "string"
+        },
+        {
+          "name": "uri",
+          "type": "string"
+        },
+        {
+          "name": "title",
+          "type": "string"
+        }
+      ]
     }
   ],
   "accounts": [
@@ -170,6 +268,10 @@
           {
             "name": "requirementsCount",
             "type": "u8"
+          },
+          {
+            "name": "nftUri",
+            "type": "string"
           },
           {
             "name": "bump",
@@ -281,6 +383,9 @@
           },
           {
             "name": "MaxEnrollmentreached"
+          },
+          {
+            "name": "EnrollmentExpired"
           }
         ]
       }
@@ -294,6 +399,6 @@
     }
   ],
   "metadata": {
-    "address": "4AmPAMovn48nui76YZ6pN8ztchfb8QMybnG3a3SYb7eV"
+    "address": "9aLFmxHoJTUZT6s5ak2dQZ3AXdtYmSNrve6hbRESdT86"
   }
 }

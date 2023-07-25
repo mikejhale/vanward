@@ -10,6 +10,7 @@ type addCertArgs = {
   title: string;
   maxEnrollees: number;
   endDate: number;
+  nftUri: string;
 };
 
 export const getCertifications = async (
@@ -52,7 +53,8 @@ export const addCertification = async (args: addCertArgs) => {
       args.id,
       args.title,
       args.maxEnrollees,
-      new BN(args.endDate)
+      new BN(args.endDate),
+      args.nftUri
     )
     .accounts({
       certification: certificationPda,

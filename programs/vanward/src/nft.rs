@@ -48,7 +48,6 @@ pub fn mint_nft(
         },
     ];
 
-    //let symbol = std::string::ToString::to_string("symb");
     invoke(
         &create_metadata_accounts_v3(
             ctx.accounts.token_metadata_program.key(),

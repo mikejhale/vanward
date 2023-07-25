@@ -21,8 +21,9 @@ pub mod vanward {
         title: String,
         max_enrollees: u16,
         enrollment_enddate: i64,
+        nft_uri: String,
     ) -> Result<()> {
-        certification::add_certification(ctx, id, title, max_enrollees, enrollment_enddate)
+        certification::add_certification(ctx, id, title, max_enrollees, enrollment_enddate, nft_uri)
     }
 
     // add requirement

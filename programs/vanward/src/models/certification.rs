@@ -13,5 +13,7 @@ pub struct Certification {
     pub enrollment_enddate: i64,
     pub enrollment_open: bool,
     pub requirements_count: u8,
+    #[max_len(480)]
+    pub nft_uri: String,
     pub bump: u8,
 }

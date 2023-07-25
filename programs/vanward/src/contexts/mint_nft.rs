@@ -1,22 +1,20 @@
 use anchor_lang::prelude::*;
-use anchor_spl::token::Token;
+use anchor_spl::token::{Mint, Token, TokenAccount};
 
 #[derive(Accounts)]
 pub struct MintNFT<'info> {
     #[account(mut)]
     pub mint_authority: Signer<'info>,
 
-    /// CHECK: This is not dangerous because we don't read or write from this account
     #[account(mut)]
-    pub mint: UncheckedAccount<'info>,
+    pub mint: Account<'info, Mint>,
     // #[account(mut)]
     pub token_program: Program<'info, Token>,
     /// CHECK: This is not dangerous because we don't read or write from this account
     #[account(mut)]
     pub metadata: UncheckedAccount<'info>,
-    /// CHECK: This is not dangerous because we don't read or write from this account
     #[account(mut)]
-    pub token_account: UncheckedAccount<'info>,
+    pub token_account: Account<'info, TokenAccount>,
     /// CHECK: This is not dangerous because we don't read or write from this account
     pub token_metadata_program: UncheckedAccount<'info>,
     /// CHECK: This is not dangerous because we don't read or write from this account

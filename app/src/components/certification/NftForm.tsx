@@ -1,64 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import { Image, Box, Button } from '@chakra-ui/react';
-import { useConnection, useWallet } from '@solana/wallet-adapter-react';
+import { Image, Box, Button, Stack } from '@chakra-ui/react';
+import { useWallet } from '@solana/wallet-adapter-react';
 import { useDropzone } from 'react-dropzone';
 import { createGenericFileFromBrowserFile } from '@metaplex-foundation/umi';
 import { walletAdapterIdentity } from '@metaplex-foundation/umi-signer-wallet-adapters';
 import { createUmi } from '@metaplex-foundation/umi-bundle-defaults';
 import { nftStorageUploader } from '@metaplex-foundation/umi-uploader-nft-storage';
+import { nftStorageUploadImage } from '../../utils/uploads';
 
 const NftForm = (props: any) => {
   const [file, setFile] = useState(null);
   const wallet = useWallet();
-  const { connection } = useConnection();
 
   const handleSaveImage = async () => {
-    console.log('file', file);
-    const imageFile = await createGenericFileFromBrowserFile(file, {
-      displayName: file.name,
-      uniqueName: file.name,
-      contentType: file.type,
-      extension: file.name.split('.').pop(),
-    });
-    console.log('imageFile', imageFile);
+    const myUri = await nftStorageUploadImage(file, wallet);
+    props.nftUri(myUri);
+  };
 
-    const umi = createUmi('https://api.devnet.solana.com')
-      .use(
-        nftStorageUploader({
-          token: process.env.NEXT_PUBLIC_NFT_STORAGE_TOKEN,
-        })
-      )
-      .use(walletAdapterIdentity(wallet));
-
-    const [myUri] = await umi.uploader.upload([imageFile], {
-      onProgress: (percent) => {
-        console.log(`${percent * 100}% uploaded...`);
-      },
-    });
-
-    console.log('file uri:', myUri);
-
-    // const bundlr = new WebBundlr(
-    //   'https://node1.bundlr.network',
-    //   'solana',
-    //   wallet
-    // );
-    // await bundlr.ready();
-
-    // const mplx = Metaplex.make(connection, { cluster: 'devnet' })
-    //   .use(walletAdapterIdentity(wallet))
-    //   .use(
-    //     bundlrStorage({
-    //       address: 'https://devnet.bundlr.network',
-    //       providerUrl: 'https://api.devnet.solana.com',
-    //       timeout: 60000,
-    //     })
-    //   );
-
-    // const mplxFile = toMetaplexFile(file, file.name);
-    // const imgUri = await mplx.storage().upload(mplxFile);
-
-    // console.log('imgUri', imgUri);
+  const handleCancel = async () => {
+    setFile(null);
+    props.addingNft(false);
   };
 
   const { acceptedFiles, getRootProps, getInputProps, isDragActive } =
@@ -77,7 +38,7 @@ const NftForm = (props: any) => {
     });
 
   const preview = (
-    <Box>
+    <Box p={6}>
       <Image
         src={file?.preview}
         alt={file?.name}
@@ -87,24 +48,34 @@ const NftForm = (props: any) => {
           URL.revokeObjectURL(file?.preview);
         }}
       />
-      <Button onClick={handleSaveImage}>Save</Button>
+      <Stack mt={6} spacing={4} direction='row' align='center'>
+        <Button onClick={handleCancel} variant='outline' colorScheme='navy'>
+          Cancel
+        </Button>
+        <Button onClick={handleSaveImage} colorScheme='navy'>
+          Save
+        </Button>
+      </Stack>
     </Box>
   );
 
-  useEffect(() => {
-    console.log(acceptedFiles);
-  }, [acceptedFiles]);
-
   return (
-    <Box>
-      <div {...getRootProps()}>
+    <Box mt={12}>
+      <Box
+        p={12}
+        hidden={file}
+        borderStyle='dashed'
+        borderWidth='2px'
+        borderRadius={12}
+        {...getRootProps()}
+      >
         <input {...getInputProps()} />
         {isDragActive ? (
-          <p>Drop the files here ...</p>
+          <p>Drop the file here ...</p>
         ) : (
-          <p>Drag 'n' drop some files here, or click to select files</p>
+          <p>Drag image here, or click to select file</p>
         )}
-      </div>
+      </Box>
       {file ? preview : null}
     </Box>
   );
