@@ -6,6 +6,7 @@ import {
   getAssociatedTokenAddress,
   createInitializeMintInstruction,
   MINT_SIZE,
+  // @ts-ignore
 } from '@solana/spl-token'; // IGNORE THESE ERRORS IF ANY
 
 export const mintNft = async (
