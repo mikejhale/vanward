@@ -29,6 +29,9 @@
       "node_modules/@types",
       "src/types"
     ],
+    "types": [
+      "node"
+    ],
     "target": "es2016",
     "lib": [
       "dom",
