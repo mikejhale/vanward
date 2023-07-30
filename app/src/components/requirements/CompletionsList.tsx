@@ -26,9 +26,6 @@ const CompletionsList = (props: {
   const textColor = useColorModeValue('secondaryGray.900', 'white');
   const { mutate } = useMutation({
     mutationFn: completeRequirement,
-    onSuccess: (data) => {
-      console.log('success', data);
-    },
   });
 
   const { data, isFetching } = useQuery({
@@ -42,7 +39,6 @@ const CompletionsList = (props: {
   });
 
   const setComplete = (req: string) => {
-    console.log('set complete', req);
     mutate({
       wallet,
       connection,

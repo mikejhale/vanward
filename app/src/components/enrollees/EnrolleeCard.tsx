@@ -73,7 +73,7 @@ const EnrolleeCard = (props: any) => {
   }
 
   const handleMintNft = async () => {
-    console.log('minting nft');
+    console.log('minting nft...');
 
     var date = new Date();
 
@@ -99,7 +99,6 @@ const EnrolleeCard = (props: any) => {
     const metadataUri =
       'https://bafkreibq2d62lzmh5tylv32jh6drxkg55gqsh6sg3nmnza2vdymiq5voky.ipfs.nftstorage.link/';
 
-    console.log(enrollee.account.owner.toString());
     const mintTx = await mintNft(
       wallet,
       program,

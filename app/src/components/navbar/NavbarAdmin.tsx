@@ -13,14 +13,7 @@ import {
 import { useState, useEffect } from 'react';
 import AdminNavbarLinks from 'components/navbar/NavbarLinksAdmin';
 
-export default function AdminNavbar(props: {
-  secondary: boolean;
-  message: string | boolean;
-  brandText: string;
-  logoText: string;
-  fixed: boolean;
-  onOpen: (...args: any[]) => any;
-}) {
+export default function AdminNavbar(props: any) {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {

@@ -71,16 +71,9 @@ export const CertificationForm: FC = () => {
   };
 
   const handleAddNft = (imgUri: string) => {
-    console.log('imgUri', imgUri);
     setAddingNft(false);
     setNftUri(imgUri);
   };
-
-  // useEffect(() => {
-  //   console.log('Issue NFT', issueNft);
-  // }, [issueNft]);
-
-  console.log('Adding NFT', addingNft);
 
   const nft = () => {
     if (issueNft && !nftUri) {

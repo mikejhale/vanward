@@ -29,8 +29,6 @@ const EnrollForm = (props: any) => {
         systemProgram: web3.SystemProgram.programId,
       })
       .rpc();
-
-    console.log('enroll', enrollmentPda.toString());
   };
 
   return (

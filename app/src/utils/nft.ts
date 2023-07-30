@@ -1,7 +1,5 @@
 import { web3 } from '@coral-xyz/anchor';
-import { PublicKey, Keypair } from '@solana/web3.js';
-import { Program, Wallet } from '@coral-xyz/anchor';
-//import { Vanward } from '../target/types/vanward';
+import { PublicKey } from '@solana/web3.js';
 import {
   TOKEN_PROGRAM_ID,
   createAssociatedTokenAccountInstruction,
@@ -17,12 +15,6 @@ export const mintNft = async (
   metadataUri: string,
   recipient: PublicKey
 ) => {
-  console.log('wallet', wallet);
-  console.log('program', program);
-  console.log('title', title);
-  console.log('metadataUri', metadataUri);
-  console.log('recipient', recipient);
-
   const TOKEN_METADATA_PROGRAM_ID = new PublicKey(
     'metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s'
   );
