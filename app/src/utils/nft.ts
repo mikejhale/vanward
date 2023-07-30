@@ -1,3 +1,4 @@
+// @ts-ignore-file
 import { web3 } from '@coral-xyz/anchor';
 import { PublicKey } from '@solana/web3.js';
 import {
@@ -6,7 +7,6 @@ import {
   getAssociatedTokenAddress,
   createInitializeMintInstruction,
   MINT_SIZE,
-  // @ts-ignore
 } from '@solana/spl-token'; // IGNORE THESE ERRORS IF ANY
 
 export const mintNft = async (
