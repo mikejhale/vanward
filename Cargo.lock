@@ -63,7 +63,7 @@ name = "anchor-attribute-access-control"
 version = "0.28.0"
 source = "git+https://github.com/coral-xyz/anchor.git#9ff7dfcf6fa4456f1a356172fd4b94324591e3a6"
 dependencies = [
- "anchor-syn",
+ "anchor-syn 0.28.0",
  "anyhow",
  "proc-macro2",
  "quote",
@@ -76,7 +76,7 @@ name = "anchor-attribute-account"
 version = "0.28.0"
 source = "git+https://github.com/coral-xyz/anchor.git#9ff7dfcf6fa4456f1a356172fd4b94324591e3a6"
 dependencies = [
- "anchor-syn",
+ "anchor-syn 0.28.0",
  "anyhow",
  "bs58 0.5.0",
  "proc-macro2",
@@ -90,7 +90,7 @@ name = "anchor-attribute-constant"
 version = "0.28.0"
 source = "git+https://github.com/coral-xyz/anchor.git#9ff7dfcf6fa4456f1a356172fd4b94324591e3a6"
 dependencies = [
- "anchor-syn",
+ "anchor-syn 0.28.0",
  "proc-macro2",
  "syn 1.0.109",
 ]
@@ -100,7 +100,7 @@ name = "anchor-attribute-error"
 version = "0.28.0"
 source = "git+https://github.com/coral-xyz/anchor.git#9ff7dfcf6fa4456f1a356172fd4b94324591e3a6"
 dependencies = [
- "anchor-syn",
+ "anchor-syn 0.28.0",
  "proc-macro2",
  "quote",
  "syn 1.0.109",
@@ -111,7 +111,7 @@ name = "anchor-attribute-event"
 version = "0.28.0"
 source = "git+https://github.com/coral-xyz/anchor.git#9ff7dfcf6fa4456f1a356172fd4b94324591e3a6"
 dependencies = [
- "anchor-syn",
+ "anchor-syn 0.28.0",
  "anyhow",
  "proc-macro2",
  "quote",
@@ -123,7 +123,7 @@ name = "anchor-attribute-program"
 version = "0.28.0"
 source = "git+https://github.com/coral-xyz/anchor.git#9ff7dfcf6fa4456f1a356172fd4b94324591e3a6"
 dependencies = [
- "anchor-syn",
+ "anchor-syn 0.28.0",
  "anyhow",
  "proc-macro2",
  "quote",
@@ -135,7 +135,7 @@ name = "anchor-derive-accounts"
 version = "0.28.0"
 source = "git+https://github.com/coral-xyz/anchor.git#9ff7dfcf6fa4456f1a356172fd4b94324591e3a6"
 dependencies = [
- "anchor-syn",
+ "anchor-syn 0.28.0",
  "anyhow",
  "proc-macro2",
  "quote",
@@ -149,6 +149,21 @@ source = "git+https://github.com/coral-xyz/anchor.git#9ff7dfcf6fa4456f1a356172fd
 dependencies = [
  "proc-macro2",
  "quote",
+ "syn 1.0.109",
+]
+
+[[package]]
+name = "anchor-idl"
+version = "0.3.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "3de2665dc06ee0bd3c7d08f47f136a3d5b1e34b7ac1bc632c86a812add04d68b"
+dependencies = [
+ "anchor-syn 0.24.2",
+ "darling",
+ "heck 0.4.1",
+ "proc-macro2",
+ "quote",
+ "serde_json",
  "syn 1.0.109",
 ]
 
@@ -189,12 +204,31 @@ dependencies = [
 
 [[package]]
 name = "anchor-syn"
+version = "0.24.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "03549dc2eae0b20beba6333b14520e511822a6321cdb1760f841064a69347316"
+dependencies = [
+ "anyhow",
+ "bs58 0.3.1",
+ "heck 0.3.3",
+ "proc-macro2",
+ "proc-macro2-diagnostics",
+ "quote",
+ "serde",
+ "serde_json",
+ "sha2 0.9.9",
+ "syn 1.0.109",
+ "thiserror",
+]
+
+[[package]]
+name = "anchor-syn"
 version = "0.28.0"
 source = "git+https://github.com/coral-xyz/anchor.git#9ff7dfcf6fa4456f1a356172fd4b94324591e3a6"
 dependencies = [
  "anyhow",
  "bs58 0.5.0",
- "heck",
+ "heck 0.3.3",
  "proc-macro2",
  "quote",
  "serde",
@@ -370,6 +404,12 @@ dependencies = [
  "quote",
  "syn 1.0.109",
 ]
+
+[[package]]
+name = "bs58"
+version = "0.3.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "476e9cd489f9e121e02ffa6014a8ef220ecb15c05ed23fc34cca13925dc283fb"
 
 [[package]]
 name = "bs58"
@@ -600,6 +640,41 @@ dependencies = [
 ]
 
 [[package]]
+name = "darling"
+version = "0.14.4"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "7b750cb3417fd1b327431a470f388520309479ab0bf5e323505daf0290cd3850"
+dependencies = [
+ "darling_core",
+ "darling_macro",
+]
+
+[[package]]
+name = "darling_core"
+version = "0.14.4"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "109c1ca6e6b7f82cc233a97004ea8ed7ca123a9af07a8230878fcfda9b158bf0"
+dependencies = [
+ "fnv",
+ "ident_case",
+ "proc-macro2",
+ "quote",
+ "strsim",
+ "syn 1.0.109",
+]
+
+[[package]]
+name = "darling_macro"
+version = "0.14.4"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a4aab4dbc9f7611d8b55048a3a16d2d010c2c8334e46304b40ac1cc14bf3b48e"
+dependencies = [
+ "darling_core",
+ "quote",
+ "syn 1.0.109",
+]
+
+[[package]]
 name = "derivation-path"
 version = "0.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -756,6 +831,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "heck"
+version = "0.4.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "95505c38b4572b2d910cecb0281560f54b440a19336cbbcb27bf6ce6adc6f5a8"
+
+[[package]]
 name = "hermit-abi"
 version = "0.1.19"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -808,6 +889,12 @@ name = "humantime"
 version = "2.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "9a3a5bfb195931eeb336b2a7b4d761daec841b97f947d34394601737a7bba5e4"
+
+[[package]]
+name = "ident_case"
+version = "1.0.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b9e0384b61958566e926dc50660321d12159025e767c18e043daf26b70104c39"
 
 [[package]]
 name = "im"
@@ -1231,6 +1318,19 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "2b63bdb0cd06f1f4dedf69b254734f9b45af66e4a031e42a7480257d9898b435"
 dependencies = [
  "unicode-ident",
+]
+
+[[package]]
+name = "proc-macro2-diagnostics"
+version = "0.9.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "4bf29726d67464d49fa6224a1d07936a8c08bb3fba727c7493f6cf1616fdaada"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn 1.0.109",
+ "version_check",
+ "yansi",
 ]
 
 [[package]]
@@ -1821,6 +1921,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "strsim"
+version = "0.10.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "73473c0e59e6d5812c5dfe2a064a6444949f089e20eec9a2e5506596494e4623"
+
+[[package]]
 name = "subtle"
 version = "2.4.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1988,6 +2094,7 @@ dependencies = [
 name = "vanward"
 version = "0.1.0"
 dependencies = [
+ "anchor-idl",
  "anchor-lang",
  "anchor-spl",
  "getrandom 0.2.9",
@@ -2184,6 +2291,12 @@ checksum = "ae8970b36c66498d8ff1d66685dc86b91b29db0c7739899012f63a63814b4b28"
 dependencies = [
  "memchr",
 ]
+
+[[package]]
+name = "yansi"
+version = "0.5.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "09041cd90cf85f7f8b2df60c646f853b7f535ce68f85244eb6731cf89fa498ec"
 
 [[package]]
 name = "zeroize"

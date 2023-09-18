@@ -95,9 +95,9 @@ const EnrolleeCard = (props: any) => {
       'image/' + props.certification?.nftUri.split('.').pop();
     metadata.properties.creators[0].address = wallet.publicKey.toString();
 
-    //const metadataUri = await nftStorageUploadMetadata(metadata, wallet);
-    const metadataUri =
-      'https://bafkreibq2d62lzmh5tylv32jh6drxkg55gqsh6sg3nmnza2vdymiq5voky.ipfs.nftstorage.link/';
+    const metadataUri = await nftStorageUploadMetadata(metadata, wallet);
+    // const metadataUri =
+    //   'https://bafkreibq2d62lzmh5tylv32jh6drxkg55gqsh6sg3nmnza2vdymiq5voky.ipfs.nftstorage.link/';
 
     const mintTx = await mintNft(
       wallet,

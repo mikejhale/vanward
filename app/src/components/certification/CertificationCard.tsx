@@ -11,15 +11,24 @@ import {
   CardFooter,
   Divider,
   useToast,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalCloseButton,
+  ModalBody,
+  ModalFooter,
+  Button,
+  Image,
   useColorModeValue,
   Tooltip,
+  useDisclosure,
 } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import EnrolleeCount from './EnrolleeCount';
 import EnrollmentStatus from './EnrollmentStatus';
 import { HiUsers } from 'react-icons/hi';
 import { MdFormatListBulletedAdd } from 'react-icons/md';
-import { RiFileCopy2Line } from 'react-icons/ri';
+import { RiFileCopy2Line, RiNftLine } from 'react-icons/ri';
 import { useCopyToClipboard } from '../../hooks/useCopyToClipboard';
 
 const CertificationCard = (props: any) => {
@@ -34,6 +43,7 @@ const CertificationCard = (props: any) => {
   const [enrollValue, enrollCopy] = useCopyToClipboard();
   const toast = useToast();
   const certification = props.certification;
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   useEffect(() => {
     if (value) {
@@ -136,6 +146,20 @@ const CertificationCard = (props: any) => {
             enrolleeCount={certification.enrolleeCount}
           />
         </Box>
+        {certification.nftUri && (
+          <Tooltip hasArrow label='NFT' placement='top'>
+            <IconButton
+              onClick={onOpen}
+              variant='outline'
+              icon={<RiNftLine />}
+              size='lg'
+              aria-label='View NFT'
+              title='NFT'
+              mr={4}
+              //color={useColorModeValue('brand.500', 'gray.200')}
+            />
+          </Tooltip>
+        )}
         <Tooltip hasArrow label='Manage Requirements' placement='top'>
           <NextLink
             href={'/certifications/reqs?cert=' + props.publickey}
@@ -168,6 +192,18 @@ const CertificationCard = (props: any) => {
           </NextLink>
         </Tooltip>
       </CardFooter>
+      <Modal onClose={onClose} isOpen={isOpen} isCentered>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalCloseButton />
+          <ModalBody p={0}>
+            <Image src={certification.nftUri} />
+          </ModalBody>
+          <ModalFooter>
+            <Button onClick={onClose}>Close</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </Card>
   );
 };

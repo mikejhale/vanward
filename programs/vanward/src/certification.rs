@@ -12,6 +12,8 @@ pub fn add_certification(
     max_enrollees: u16,
     enrollment_enddate: i64,
     nft_uri: String,
+    deposit_token: Pubkey,
+    deposit_amount: u64,
 ) -> Result<()> {
     let cert = &mut ctx.accounts.certification;
     cert.authority = *ctx.accounts.authority.key;
@@ -22,6 +24,8 @@ pub fn add_certification(
     cert.enrollment_open = true;
     cert.requirements_count = 0;
     cert.nft_uri = nft_uri;
+    cert.deposit_token = deposit_token;
+    cert.deposit_amount = deposit_amount;
     cert.bump = *ctx.bumps.get("certification").unwrap();
     Ok(())
 }

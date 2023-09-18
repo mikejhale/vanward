@@ -2,6 +2,7 @@ import { web3, utils } from '@coral-xyz/anchor';
 import { getProgram } from './program';
 import { getFilter } from './memcmpFilter';
 import { PublicKey } from '@solana/web3.js';
+import { RiCornerDownLeftFill } from 'react-icons/ri';
 
 interface AddRequirementArgs {
   wallet: any;
@@ -32,8 +33,6 @@ export const getRequirements = async (
 };
 
 export const addRequirement = async (args: AddRequirementArgs) => {
-  console.log('adding requirement...');
-
   const program = getProgram(args.wallet, args.connection);
   const [requirementPda] = await PublicKey.findProgramAddressSync(
     [
@@ -62,8 +61,6 @@ export const addRequirement = async (args: AddRequirementArgs) => {
 export const completeRequirement = async (args: CompleteRequirementArgs) => {
   const program = getProgram(args.wallet, args.connection);
 
-  console.log(args)
-
   const tx = await program.methods
     .completeRequirement()
     .accounts({
@@ -75,7 +72,5 @@ export const completeRequirement = async (args: CompleteRequirementArgs) => {
     })
     .rpc();
 
-  console.log('Requirement Completed: ', tx);
-
-  return tx;
+  return args.requirement;
 };

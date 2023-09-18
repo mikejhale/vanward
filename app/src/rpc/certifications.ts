@@ -63,6 +63,5 @@ export const addCertification = async (args: addCertArgs) => {
     })
     .rpc();
 
-  console.log('tx', tx);
   return tx;
 };

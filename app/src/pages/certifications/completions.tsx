@@ -9,6 +9,7 @@ import { shortAddress } from '../../utils/address';
 import CompletionsList from 'components/requirements/CompletionsList';
 import { ProgramAccount } from '@coral-xyz/anchor';
 import { useState, useEffect, useContext } from 'react';
+import BackLink from 'components/nav/BackLink';
 
 const Completions: NextPage = () => {
   const [cert, setCert] = useState(null);
@@ -31,6 +32,11 @@ const Completions: NextPage = () => {
 
   return (
     <Box pt={{ base: '130px', md: '80px', xl: '80px' }}>
+      <BackLink
+        href={`/certifications/enrollments?cert=${certificationAddress}`}
+        text='Back to all enrollments'
+      />
+
       <Card mb='20px'>
         <Flex direction='column' w='100%' justify='space-between' mb='30px'>
           <Text

@@ -15,5 +15,7 @@ pub struct Certification {
     pub requirements_count: u8,
     #[max_len(480)]
     pub nft_uri: String,
+    pub deposit_token: Pubkey,
+    pub deposit_amount: u64,
     pub bump: u8,
 }

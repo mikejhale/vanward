@@ -8,7 +8,7 @@ import {
 } from '@chakra-ui/react';
 import { useConnection, useWallet } from '@solana/wallet-adapter-react';
 import { getRequirements, completeRequirement } from '../../rpc/requirements';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { getEnrollment } from '../../rpc/enrollees';
 import { isBitSet } from '../../utils/numbers';
@@ -24,8 +24,12 @@ const CompletionsList = (props: {
   const wallet = useWallet();
   const { certification } = props;
   const textColor = useColorModeValue('secondaryGray.900', 'white');
+  const queryClient = useQueryClient();
   const { mutate } = useMutation({
     mutationFn: completeRequirement,
+    onSuccess: (data) => {
+      queryClient.invalidateQueries();
+    },
   });
 
   const { data, isFetching } = useQuery({
@@ -38,7 +42,7 @@ const CompletionsList = (props: {
     queryFn: () => getEnrollment(wallet, connection, props.enrollment) as any,
   });
 
-  const setComplete = (req: string) => {
+  const setComplete = (req: string, order: number) => {
     mutate({
       wallet,
       connection,
@@ -86,7 +90,7 @@ const CompletionsList = (props: {
                     colorScheme='navy'
                     leftIcon={<RiCheckLine />}
                     onClick={() => {
-                      setComplete(req.publicKey.toString());
+                      setComplete(req.publicKey.toString(), req.account.order);
                     }}
                   >
                     Set Complete

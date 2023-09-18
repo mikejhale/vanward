@@ -18,16 +18,12 @@ export const nftStorageUploadImage = async (file: any, wallet: any) => {
 };
 
 export const nftStorageUploadMetadata = async (json: any, wallet: any) => {
-  console.log(json);
-
   const jsonFile = await createGenericFileFromJson(json, 'metadata.json', {
     displayName: 'metadata.json',
     uniqueName: 'metadata.json',
     contentType: 'text/json',
     extension: 'json',
   });
-
-  console.log('jsonFile', jsonFile);
 
   return nftStorageUpload(jsonFile, wallet);
 };
@@ -43,11 +39,9 @@ const nftStorageUpload = async (file: any, wallet: any) => {
 
   const [fileUri] = await umi.uploader.upload([file], {
     onProgress: (percent) => {
-      console.log(`${percent * 100}% uploaded...`);
+      console.log(`${percent}% uploaded...`);
     },
   });
-
-  console.log('fileUri', fileUri);
 
   return fileUri;
 };

@@ -1,5 +1,15 @@
 // Chakra imports
-import { Text, Button, Box, Flex, useColorModeValue } from '@chakra-ui/react';
+import {
+  Text,
+  Button,
+  Box,
+  Flex,
+  Icon,
+  HStack,
+  VStack,
+  Link,
+  useColorModeValue,
+} from '@chakra-ui/react';
 // Assets
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
@@ -7,8 +17,10 @@ import { AppContext } from '../../contexts/AppContext';
 import Card from '../../components/card/Card';
 import RequirementsList from 'components/requirements/RequirementsList';
 import RequirementForm from 'components/requirements/RequirementForm';
+import BackLink from 'components/nav/BackLink';
 import { ProgramAccount } from '@coral-xyz/anchor';
 import { useState, useEffect, useContext } from 'react';
+import NextLink from 'next/link';
 
 const Requirements: NextPage = () => {
   const [cert, setCert] = useState(null);
@@ -39,6 +51,8 @@ const Requirements: NextPage = () => {
 
   return (
     <Box pt={{ base: '130px', md: '80px', xl: '80px' }}>
+      <BackLink href='/certifications/list' text='Back to all certifications' />
+
       <Card mb='20px'>
         <Flex direction='column' w='100%' justify='space-between' mb='30px'>
           <Text

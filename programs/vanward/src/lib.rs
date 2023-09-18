@@ -13,6 +13,7 @@ declare_id!("9aLFmxHoJTUZT6s5ak2dQZ3AXdtYmSNrve6hbRESdT86");
 
 #[program]
 pub mod vanward {
+
     use super::*;
 
     pub fn add_certification(
@@ -22,8 +23,19 @@ pub mod vanward {
         max_enrollees: u16,
         enrollment_enddate: i64,
         nft_uri: String,
+        deposit_token: Pubkey,
+        deposit_amount: u64,
     ) -> Result<()> {
-        certification::add_certification(ctx, id, title, max_enrollees, enrollment_enddate, nft_uri)
+        certification::add_certification(
+            ctx,
+            id,
+            title,
+            max_enrollees,
+            enrollment_enddate,
+            nft_uri,
+            deposit_token,
+            deposit_amount,
+        )
     }
 
     // add requirement

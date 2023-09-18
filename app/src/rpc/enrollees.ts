@@ -58,7 +58,5 @@ export const addEnrollee = async (args: requirementArgs) => {
     })
     .rpc();
 
-  console.log('Account Created (Requirement)', tx);
-
   return { module: args.module, credits: args.credits };
 };

@@ -52,7 +52,6 @@ export const mintNft = async (
 
   const mintKey: web3.Keypair = await web3.Keypair.generate();
 
-  console.log('mintkey', mintKey.publicKey.toString());
   const NftTokenAccount = await getAssociatedTokenAddress(
     mintKey.publicKey,
     recipient
@@ -99,5 +98,5 @@ export const mintNft = async (
       ),
     ])
     .rpc();
-  console.log('Your transaction signature', tx);
+  console.log('Mint NFT Tx signature', tx);
 };

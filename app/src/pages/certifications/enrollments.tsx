@@ -7,6 +7,7 @@ import { AppContext } from '../../contexts/AppContext';
 import EnrolleeList from 'components/enrollees/EnrolleeList';
 import { ProgramAccount } from '@coral-xyz/anchor';
 import { useState, useEffect, useContext } from 'react';
+import BackLink from 'components/nav/BackLink';
 
 const Enrollments: NextPage = () => {
   const [cert, setCert] = useState(null);
@@ -27,6 +28,8 @@ const Enrollments: NextPage = () => {
 
   return (
     <Box pt={{ base: '130px', md: '80px', xl: '80px' }}>
+      <BackLink href='/certifications/list' text='Back to all certifications' />
+
       <EnrolleeList certification={certificationAddress} />
     </Box>
   );
