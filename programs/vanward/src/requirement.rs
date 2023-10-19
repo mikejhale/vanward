@@ -10,7 +10,7 @@ pub fn add_requirement(ctx: Context<AddRequirement>, module: String, credits: u8
     req.certification = *ctx.accounts.certification.to_account_info().key;
     req.module = module;
     req.credits = credits;
-    req.bump = *ctx.bumps.get("requirement").unwrap();
+    req.bump = ctx.bumps.requirement;
 
     let cert = &mut ctx.accounts.certification;
     cert.requirements_count = cert.requirements_count.checked_add(1).unwrap();

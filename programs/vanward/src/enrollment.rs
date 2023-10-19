@@ -36,7 +36,7 @@ pub fn enroll(ctx: Context<Enroll>) -> Result<()> {
     enrollment.owner = *ctx.accounts.owner.key;
     enrollment.complete = false;
     enrollment.completed_requirements = 0;
-    enrollment.bump = *ctx.bumps.get("enrollment").unwrap();
+    enrollment.bump = ctx.bumps.enrollment;
     Ok(())
 }
 

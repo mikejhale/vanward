@@ -26,6 +26,7 @@ pub fn add_certification(
     cert.nft_uri = nft_uri;
     cert.deposit_token = deposit_token;
     cert.deposit_amount = deposit_amount;
-    cert.bump = *ctx.bumps.get("certification").unwrap();
+    //cert.bump = *ctx.bumps.get("certification").unwrap();
+    cert.bump = ctx.bumps.certification;
     Ok(())
 }
