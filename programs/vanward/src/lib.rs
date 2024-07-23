@@ -5,7 +5,7 @@ mod contexts;
 mod enrollment;
 mod errors;
 mod models;
-mod nft;
+// mod nft;
 mod requirement;
 use contexts::*;
 
@@ -21,20 +21,20 @@ pub mod vanward {
         id: String,
         title: String,
         max_enrollees: u16,
-        enrollment_enddate: i64,
-        nft_uri: String,
-        deposit_token: Pubkey,
-        deposit_amount: u64,
+        // enrollment_enddate: i64,
+        // nft_uri: String,
+        // deposit_token: Pubkey,
+        // deposit_amount: u64,
     ) -> Result<()> {
         certification::add_certification(
             ctx,
             id,
             title,
             max_enrollees,
-            enrollment_enddate,
-            nft_uri,
-            deposit_token,
-            deposit_amount,
+            //enrollment_enddate,
+            // nft_uri,
+            // deposit_token,
+            // deposit_amount,
         )
     }
 
@@ -62,13 +62,13 @@ pub mod vanward {
         requirement::complete_requirement(ctx)
     }
 
-    pub fn mint_nft(
-        ctx: Context<MintNFT>,
-        creator_key: Pubkey,
-        symbol: String,
-        uri: String,
-        title: String,
-    ) -> Result<()> {
-        nft::mint_nft(ctx, creator_key, symbol, uri, title)
-    }
+    // pub fn mint_nft(
+    //     ctx: Context<MintNFT>,
+    //     creator_key: Pubkey,
+    //     symbol: String,
+    //     uri: String,
+    //     title: String,
+    // ) -> Result<()> {
+    //     nft::mint_nft(ctx, creator_key, symbol, uri, title)
+    // }
 }

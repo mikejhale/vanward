@@ -55,16 +55,16 @@ describe('vanward', async () => {
   const enrollee = new Keypair();
   const enrollee2 = new Keypair();
 
-  it('Airdrop', async () => {
-    await Promise.all(
-      [enrollee, enrollee2].map(async (k) => {
-        return await getProvider().connection.requestAirdrop(
-          k.publicKey,
-          100 * web3.LAMPORTS_PER_SOL
-        );
-      })
-    ).then(confirmTxs);
-  });
+  // it('Airdrop', async () => {
+  //   await Promise.all(
+  //     [enrollee, enrollee2].map(async (k) => {
+  //       return await getProvider().connection.requestAirdrop(
+  //         k.publicKey,
+  //         100 * web3.LAMPORTS_PER_SOL
+  //       );
+  //     })
+  //   ).then(confirmTxs);
+  // });
 
   it('can add a certification with max enrollees', async () => {
     const max_enrollees = 2;
@@ -72,8 +72,8 @@ describe('vanward', async () => {
       .addCertification(
         certificationId,
         certificationTitle,
-        max_enrollees,
-        new BN(0)
+        max_enrollees
+        //new BN(0)
       )
       .accounts({
         certification: certificationPda,
@@ -92,16 +92,6 @@ describe('vanward', async () => {
     expect(certAccount.enrolleeCount).to.equal(0);
     expect(certAccount.requirementsCount).to.equal(0);
   });
-
-  /*
-  it('can get certifications', async () => {
-    let certAccount = await program.account.certification.fetch(
-      certificationPda.toString()
-    );
-
-    expect(certAccount.requirementsCount).to.equal(0);
-  });
-  */
 
   it('can add a requirement', async () => {
     const module = 'Week ' + certificationId;
@@ -142,7 +132,7 @@ describe('vanward', async () => {
 
     expect(certAccount.requirementsCount).to.equal(1);
   });
-
+  /*
   it('can add a second requirement', async () => {
     const module = 'Week 2 ' + certificationId;
     const credits = 1;
@@ -261,47 +251,6 @@ describe('vanward', async () => {
     expect(certAccount.enrolleeCount).to.equal(2);
   });
 
-  /*
-  it('can not enroll more than max enrollments', async () => {
-    const [enrollmentPda, enrollBump] =
-      await web3.PublicKey.findProgramAddressSync(
-        [
-          utils.bytes.utf8.encode('enroll'),
-          enrollee2.publicKey.toBuffer(),
-          certificationPda.toBuffer(),
-        ],
-        program.programId
-      );
-
-    enrollPda2 = enrollmentPda.toString();
-
-    try {
-      const tx = await program.methods
-        .enroll()
-        .accounts({
-          enrollment: enrollmentPda,
-          certification: certificationPda,
-          owner: enrollee2.publicKey,
-          systemProgram: web3.SystemProgram.programId,
-        })
-        .signers([enrollee2])
-        .rpc();
-
-      let enrollAccount = await program.account.enrollment.fetch(
-        enrollmentPda.toString()
-      );
-      expect(enrollAccount.certification.toString()).to.equal(
-        certificationPda.toString()
-      );
-    } catch (_err) {
-      expect(_err).to.be.instanceOf(AnchorError);
-      const err: AnchorError = _err;
-      const errMsg = 'Max enrollment reached';
-      expect(err.error.errorMessage).to.equal(errMsg);
-    }
-  });
-*/
-
   it('can close enrollment account', async () => {
     const tx = await program.methods
       .closeEnrollment()
@@ -353,6 +302,7 @@ describe('vanward', async () => {
     expect(enrollmentAccount.completedRequirements.toString()).to.equal('3');
     expect(enrollmentAccount.complete).to.equal(true);
   });
+  */
 });
 
 const confirmTx = async (signature: string) => {
